@@ -23,6 +23,8 @@
 ## Checklist
 ■ Basic setup and connection (wired and wireless)
 
+□ Setup GUI
+
 □ Control the robot movement
 
 □ Detect obstacles (boundaries or objects)
