@@ -1,5 +1,5 @@
 # Search and Rescue Robot
-**[ TEAM YELLOW ]**
+**[ TEAM : TECHNOBOTS ]**
 
 ● School project ISEP 2023-2024
 
