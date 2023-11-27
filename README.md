@@ -35,3 +35,9 @@
 
 
 --- --- ---
+
+```mermaid
+graph TD 
+  A[ EV3 Core controller ] --> |Data| B [ Wheels]
+
+```
