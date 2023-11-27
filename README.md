@@ -1,4 +1,6 @@
 # Search and Rescue Robot
+**[ TEAM YELLOW ]**
+
 ● School project ISEP 2023-2024
 
 ● System Modeling course
