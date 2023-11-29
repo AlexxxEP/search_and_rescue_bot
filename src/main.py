@@ -1,4 +1,5 @@
-# ---  ---  ---
+#!/usr/bin/env python3
+# ---  ---  ---  ---  ---  ---# ---  ---  ---
 # file name:    main.py
 # author:      
 # date:        2023 11 27
@@ -15,14 +16,13 @@
 # updated by:        Alexandre EANG
 # comment :          * Applied template to this document
 # ---  ---   ---  ---  ---  ---
-#!/usr/bin/env python3
-# ---  ---  ---  ---  ---  ---
 
 
 
 # ---  IMPORTS  ---  ---  ---  ---
-# list imports here
-# ---  ---   ---  ---  ---  ---
+from time import sleep
+from ev3dev2.motor import LargeMotor
+# ---  ---   ---  ---  ---  --
 
 
 
@@ -31,6 +31,8 @@
 # list constants declarations here
     # --- VARIABLES
 # list variable declarations here
+
+motor_frontleft = LargeMotor()
     # --- FUNCTIONS
 # instaciate functions here
 # ---  ---  ---  ---  ---  ---
