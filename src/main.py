@@ -8,7 +8,7 @@
 # created on:        2023 11 8
 # last updated:      2023 11 29
 # updated by:        Alexandre EANG
-# comment :         
+# comment :          Applied doc template
 # ---  ---   ---  ---  ---  ---
 #!/usr/bin/env python3
 # ---  ---  ---  ---  ---  ---
