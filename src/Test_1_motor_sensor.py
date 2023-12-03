@@ -1,6 +1,6 @@
 # ---  ---  ---  ---  ---
 # file name:         Test_1_motor_sensor.py
-# description :
+# description :      Try to start the motor with a sensor information
 #
 #
 #
