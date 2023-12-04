@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+import socket
+from ev3dev2.sensor.lego import TouchSensor
+from ev3dev2.sensor import INPUT_4
+from time import sleep
+
+# 设置服务器的 IP 地址和端口
+SERVER_IP = '172.20.10.2'
+SERVER_PORT = 12345
+
+# 初始化触摸传感器
+touch_sensor = TouchSensor(INPUT_4)
+
+# 创建 socket 对象
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    # 连接到服务器
+    s.connect((SERVER_IP, SERVER_PORT))
+    
+    try:
+        while True:
+            # 检测触摸传感器状态
+            if touch_sensor.is_pressed:
+                message = "Pressed"
+            else:
+                message = "Not pressed"
+            
+            # 发送状态信息
+            s.sendall(message.encode('utf-8'))
+            sleep(0.5)
+    except KeyboardInterrupt:
+        print("Program terminated")
