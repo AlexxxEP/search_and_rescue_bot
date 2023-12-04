@@ -1,6 +1,6 @@
 import socket
 
-# 设置端口
+
 server_port = 12345
 
 # 创建套接字
