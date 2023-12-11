@@ -13,7 +13,7 @@ wheels = MoveTank( OUTPUT_D, OUTPUT_A)
 timeout = 3000
 
 #var
-#current_ang= 0
+current_ang= 0
 timecount = 0
 
 
@@ -25,6 +25,7 @@ def Straight ( speed ):
 
 def Turn(direction):
     current_ang = gyro.angle
+    print(current_ang)
     timecounter = 0
     if (direction == "cw"):
         while (current_ang <= gyro.angle + 90 or current_ang >= gyro.angle -90):
@@ -62,7 +63,7 @@ def Stop (  ):
 # MAINSCRIPT
 sleep(1)
 print("Init: DO NOT MOVE")
-gyro.calibrate
+gyro.calibrate()
 color.calibrate_white()
 
 sleep(1)
