@@ -61,3 +61,6 @@ while (timecount < timeout):
     break
   if (timecount == timeout -2):
       print ("timed out")
+
+Stop()
+
