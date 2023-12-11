@@ -11,26 +11,6 @@ timeout = 1000
 #var
 timecount = 0
 
-sleep(100)
-print("init")
-color.calibrate_white()
-sleep(100)
-
-Straight()
-while (timecount < timeout):
-  timecount +=1
-  if (color.color == 1):
-    Stop()
-    sleep(100)
-    Turn(cw)
-    print("found edge")
-    sleep(100)
-    Stop()
-    break
-  print ("timed out")
-
-
-
 
 
 def Straight ( speed ):
@@ -53,3 +33,27 @@ def Stop (  ):
     print("Stopping")
     return
 
+
+
+
+
+
+# MAINSCRIPT
+sleep(100)
+print("init")
+color.calibrate_white()
+sleep(100)
+
+
+Straight()
+while (timecount < timeout):
+  timecount +=1
+  if (color.color == 1):
+    Stop()
+    sleep(100)
+    Turn(cw)
+    print("found edge")
+    sleep(100)
+    Stop()
+    break
+  print ("timed out")
