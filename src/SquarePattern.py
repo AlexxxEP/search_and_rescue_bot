@@ -93,9 +93,9 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
 
             ang_delta = current_ang +angle - gyro.angle
 
-            effective_speed = speed + (ang_delta* kp) - (speed*kd)
-
-            wheels.on(effective_speed, -effective_speed)
+            pid_speed = (speed*100) + (ang_delta* kp) - (speed*kd)
+            pid_speed_percent = pid_speed //100
+            wheels.on(pid_speed_percent, -pid_speed_percent)
         Stop()
         return 0
 
