@@ -27,7 +27,7 @@ def Turn(direction):
     current_ang = gyro.angle
     timecounter = 0
     if (direction == "cw"):
-        while (current_ang >= gyro.angle + 90 or current_ang <= gyro.angle -90):
+        while (current_ang <= gyro.angle + 90 or current_ang >= gyro.angle -90):
             timecounter +=1
             print(gyro.angle)
             wheels.on(10, -10)
@@ -36,7 +36,7 @@ def Turn(direction):
         Stop()
         return
     elif (direction == "ccw"):
-         while (current_ang >= gyro.angle + 90 or current_ang <= gyro.angle -90):
+         while (current_ang <= gyro.angle + 90 or current_ang >= gyro.angle -90):
              timecounter +=1
              print(gyro.angle)
              wheels.on(-10, 10)
