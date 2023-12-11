@@ -1,4 +1,4 @@
-print("prout")
+print("Helloworld")
 
 
 from ev3dev2.motor import *
@@ -6,12 +6,14 @@ from ev3dev2.sensor.lego import *
 from time import sleep
 
 #CONSTANTS
+gyro = GyroSensor()
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
 timeout = 1000
 
 #var
+current_ang= 0
 timecount = 0
 
 
@@ -22,10 +24,18 @@ def Straight ( speed ):
     return
 
 def Turn(direction):
+    current_ang = Gyro.angle
+    
     if (direction == "cw"):
-      wheels.on(10, -10)
+        while (current_ang <= Gyro.angle + 90 or current_ang >= Gyro.angle -90):
+             wheels.on(10, -10)
+        Stop()
+        return
     elif (direction == "ccw"):
-      wheels.on(-10, 10)
+         while (current_ang <= Gyro.angle + 90 or current_ang >= Gyro.angle -90):
+             wheels.on(-10, 10)
+         Stop()
+         return
     else:
       print("specify cw or ccw")
     return
@@ -43,8 +53,10 @@ def Stop (  ):
 
 # MAINSCRIPT
 sleep(1)
-print("init")
+print("Init: DO NOT MOVE")
+gyro.calibrate
 color.calibrate_white()
+
 sleep(1)
 
 
