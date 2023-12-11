@@ -76,6 +76,53 @@ def Pivot(direction ="cw", angle= 90):
       print("specify cw or ccw")
     return 1
 
+def PivotPID(angle= 90, speed=10, kp, ki, kd):
+    current_ang = gyro.angle
+    timecounter = 0
+
+    if (angle = 0):
+        return 1
+
+
+    elif (angle > 0):
+        while (current_ang +angle >= gyro.angle ):
+            timecounter +=1
+            if(timecounter == timeout):
+                print("Timed out")
+                return 1
+
+            ang_delta = current_ang +angle - gyro.angle
+
+            effective_speed = speed + (ang_delta* kp) - (speed*kd)
+
+            wheels.on(effective_speed, -effective_speed)
+        Stop()
+        return 0
+
+
+    elif (angle < 0):
+         while (current_ang - angle <= gyro.angle):
+            timecounter +=1
+            if(timecounter == timeout):
+                print("Timed out")
+                return 1
+            
+
+            ang_delta = current_ang +angle - gyro.angle
+
+            effective_speed = speed + (ang_delta* kp) - (speed*kd)
+
+            wheels.on(effective_speed, -effective_speed)
+         Stop()
+         return 0
+
+
+
+    else:
+      print("specify cw or ccw")
+    return 1
+
+
 def Turn(direction):
     current_ang = gyro.angle
     print(current_ang)
