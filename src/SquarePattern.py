@@ -72,12 +72,12 @@ sleep(1)
 #while (timecount < timeout):
   #timecount +=1
   #if (color.color == 1):
-    Stop()
-    print("found edge")
-    sleep(1)
-    Turn("cw")
-    sleep(10)
-    Stop()
+Stop()
+rint("found edge")
+sleep(1)
+Turn("cw")
+sleep(10)
+Stop()
     #break
   #if (timecount == timeout -2):
       #print ("timed out")
