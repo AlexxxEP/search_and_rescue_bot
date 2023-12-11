@@ -192,7 +192,7 @@ class DCMotor:
 class Control:
     """Class to interact with PID controller and settings."""
 
-    scale: int
+    #scale: int
 
     """
     Scaling factor between the controlled integer variable
