@@ -106,6 +106,8 @@ while (timecount < timeout):
         print("turning now")
         Turn("cw")
         timecount = 0
+        Straight(20)
+      
 
     #break
   #if (timecount == timeout -2):
