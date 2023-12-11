@@ -19,7 +19,7 @@ wait(100)
 Straight()
 while (timecount < timeout):
   timecount +=1
-  if (color.color = 1):
+  if (color.color == 1):
     Stop()
     wait(100)
     Turn(cw)
