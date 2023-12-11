@@ -94,8 +94,8 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
                 return 1
             ang_delta = current_ang +angle - gyro.angle
             
-            pid_speed += kp * ang_delta
             pid_speed -= ki * (pid_speed - old_pid_speed)
+            pid_speed += kp * ang_delta
             old_pid_speed = pid_speed
 
             print("ang_delta\tpid_speed")
