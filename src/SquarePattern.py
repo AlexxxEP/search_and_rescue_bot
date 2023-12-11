@@ -23,12 +23,12 @@ def Straight ( speed ):
     print("moving straight at", speed, "speed !")
     return
 
-def Turn(direction):
+def Turn(direction, angle):
     current_ang = gyro.angle
     print(current_ang)
     timecounter = 0
     if (direction == "cw"):
-        while (current_ang +90 >= gyro.angle ):
+        while (current_ang +angle >= gyro.angle ):
             timecounter +=1
             print(gyro.angle)
             wheels.on(10, -10)
@@ -37,7 +37,7 @@ def Turn(direction):
         Stop()
         return
     elif (direction == "ccw"):
-         while (current_ang - 90 <= gyro.angle):
+         while (current_ang - angle <= gyro.angle):
              timecounter +=1
              print(gyro.angle)
              wheels.on(-10, 10)
@@ -76,7 +76,7 @@ sleep(1)
 Stop()
 print("found edge")
 sleep(1)
-Turn("cw")
+Turn("cw", 360)
 sleep(10)
 Stop()
     #break
