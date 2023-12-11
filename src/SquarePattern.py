@@ -54,7 +54,7 @@ while (timecount < timeout):
   if (color.color == 1):
     Stop()
     sleep(1)
-    Turn(cw)
+    Turn("cw")
     print("found edge")
     sleep(10)
     Stop()
