@@ -1,3 +1,6 @@
+print("prout")
+
+
 from ev3dev2.motor import *
 from ev3dev2.sensor.lego import *
 from time import sleep
@@ -39,7 +42,7 @@ def Stop (  ):
 
 
 # MAINSCRIPT
-sleep(100)
+sleep(1000)
 print("init")
 color.calibrate_white()
 sleep(100)
