@@ -93,7 +93,7 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
                 print("Timed out")
                 return 1
             ang_delta = current_ang +angle - gyro.angle
-            print("ang_delta", angle_delta)
+            print("ang_delta", ang_delta)
             pid_speed = (ang_delta/angle) * kp  
             pid_speed -= (pid_speed - old_pid_speed) * ki
             print("pid_speed", pid_speed)
