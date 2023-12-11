@@ -6,7 +6,7 @@ from ev3dev2.sensor.lego import *
 from time import sleep
 
 #CONSTANTS
-Gyro = GyroSensor()
+gyro = GyroSensor()
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
@@ -24,15 +24,15 @@ def Straight ( speed ):
     return
 
 def Turn(direction):
-    current_ang = Gyro.angle
+    current_ang = gyro.angle
     
     if (direction == "cw"):
-        while (current_ang <= Gyro.angle + 90 or current_ang >= Gyro.angle -90):
+        while (current_ang <= gyro.angle + 90 or current_ang >= gyro.angle -90):
              wheels.on(10, -10)
         Stop()
         return
     elif (direction == "ccw"):
-         while (current_ang <= Gyro.angle + 90 or current_ang >= Gyro.angle -90):
+         while (current_ang <= gyro.angle + 90 or current_ang >= gyro.angle -90):
              wheels.on(-10, 10)
          Stop()
          return
