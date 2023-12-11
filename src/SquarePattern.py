@@ -26,9 +26,8 @@ while (timecount < timeout):
     print("found edge")
     wait(100)
     Stop()
-    return 0
+    break
   print ("timed out")
-  return 1
 
 
 
