@@ -42,10 +42,10 @@ def Stop (  ):
 
 
 # MAINSCRIPT
-sleep(1000)
+sleep(1)
 print("init")
 color.calibrate_white()
-sleep(100)
+sleep(1)
 
 
 Straight()
@@ -53,10 +53,10 @@ while (timecount < timeout):
   timecount +=1
   if (color.color == 1):
     Stop()
-    sleep(100)
+    sleep(1)
     Turn(cw)
     print("found edge")
-    sleep(100)
+    sleep(1)
     Stop()
     break
   print ("timed out")
