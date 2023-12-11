@@ -56,7 +56,8 @@ while (timecount < timeout):
     sleep(1)
     Turn(cw)
     print("found edge")
-    sleep(1)
+    sleep(10)
     Stop()
     break
-  print ("timed out")
+  if (timecount == timeout -2):
+      print ("timed out")
