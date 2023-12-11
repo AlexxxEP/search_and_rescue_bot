@@ -80,7 +80,7 @@ def PivotPID(angle= 90, speed=10, kp, ki, kd):
     current_ang = gyro.angle
     timecounter = 0
 
-    if (angle = 0):
+    if (angle == 0):
         return 1
 
 
