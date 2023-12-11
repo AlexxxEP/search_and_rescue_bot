@@ -3,7 +3,7 @@ from ev3dev2.sensor.lego import *
 from time import wait
 
 #CONSTANTS
- wheel_diameter=55.5
+wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
 timeout = 1000
