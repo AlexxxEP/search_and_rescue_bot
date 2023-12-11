@@ -98,11 +98,14 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
             pid_speed -= (pid_speed - old_pid_speed) * ki
             old_pid_speed = pid_speed
 
-            print("ang_delta\tpid_speedt\told_pid_speed")
-            print(ang_delta, "\t", pid_speed, "\t", old_pid_speed,"\n")
+            print("ang_delta\tpid_speed")
+            print(ang_delta, "\t", pid_speed, "\n\n\n\n")
 
             if (pid_speed >= 100):
                 pid_speed =100
+            elif (pid_speed <= 0):
+                pid_speed =0
+
             wheels.on(pid_speed, -pid_speed)
         Stop()
         return 0
