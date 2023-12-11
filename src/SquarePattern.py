@@ -122,9 +122,7 @@ try:
     wheels.follow_gyro_angle(
                     kp=11.3, ki=0.05, kd=3.2,
                     speed=20,
-                    target_angle=45,
-                    follow_for=3000,
-                    ms=4500
+                    target_angle=45
                 )
 except FollowGyroAngleErrorTooFast:
     Stop()
