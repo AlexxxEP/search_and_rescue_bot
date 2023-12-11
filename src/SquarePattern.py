@@ -107,6 +107,7 @@ while (timecount < timeout):
         Turn("cw")
         timecount = 0
         Straight(20)
+Stop()
       
 
     #break
