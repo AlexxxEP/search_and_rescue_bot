@@ -48,7 +48,7 @@ color.calibrate_white()
 sleep(1)
 
 
-Straight()
+Straight(50)
 while (timecount < timeout):
   timecount +=1
   if (color.color == 1):
