@@ -87,9 +87,9 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
 
 
     elif (angle > 0):
-        while (current_ang +angle > gyro.angle ):
+        while (current_ang + angle > gyro.angle -1):
             timecounter +=1
-            if(timecounter == timeout):
+            if(timecounter >= 2* timeout):
                 print("Timed out")
                 return 1
             ang_delta = current_ang +angle - gyro.angle
@@ -113,9 +113,9 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
 
 
     elif (angle < 0):
-        while (current_ang - angle > gyro.angle):
+        while (current_ang + angle < gyro.angle +1):
             timecounter +=1
-            if(timecounter == timeout):
+            if(timecounter >= 2* timeout):
                 print("Timed out")
                 return 1
             ang_delta = current_ang +angle - gyro.angle
