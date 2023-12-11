@@ -29,10 +29,10 @@ from time import sleep
 
 # ---  DECLARATIONS  ---
     # --- CONSTANTS
-gyro = GyroSensor()
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
+tank.gyro = GyroSensor()
 timeout = 3000
     # --- VARIABLES
 current_ang= 0
@@ -113,23 +113,32 @@ def Stop (  ):
 
 # ---  CODE START  ---
 print("Hello, World!")
-
-sleep(1)
 print("Init: DO NOT MOVE")
-gyro.calibrate()
+tank.gyro.calibrate()
 color.calibrate_white()
+print("Init: done, starting soon ...")
 
-sleep(1)
+wheels.follow_gyro_angle(
+                    kp=11.3, ki=0.05, kd=3.2,
+                    speed=20,
+                    target_angle=45,
+                    follow_for=3000,
+                    ms=4500
+                )
+            except FollowGyroAngleErrorTooFast:
+                Stop()
+                raise
 
 
-Straight(50)
-while (timecount < timeout):
-  timecount +=1
-  if (color.color == 1):
-        print("found edge")
-        Stop()
-        print("turning now")
-        Turn("cw")
-        timecount = 0
-        Straight(20)
-Stop()
+
+# Straight(50)
+# while (timecount < timeout):
+#   timecount +=1
+#   if (color.color == 1):
+#         print("found edge")
+#         Stop()
+#         print("turning now")
+#         Turn("cw")
+#         timecount = 0
+#         Straight(20)
+# Stop()
