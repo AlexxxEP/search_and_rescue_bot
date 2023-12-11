@@ -32,6 +32,7 @@ from time import sleep
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
+gyro = GyroSensor()
 wheels.gyro = GyroSensor()
 timeout = 3000
     # --- VARIABLES
@@ -128,7 +129,7 @@ except FollowGyroAngleErrorTooFast:
     Stop()
     raise
 
-
+#---  CODE TEST DEF START  ---
 
 # Straight(50)
 # while (timecount < timeout):
