@@ -42,7 +42,7 @@ def Straight ( speed ):
 def Turn(direction):
     if (direction == "cw"):
       wheels.on(10, -10)
-    else if (direction == "ccw"):
+    elif (direction == "ccw"):
       wheels.on(-10, 10)
     else:
       print("specify cw or ccw")
