@@ -76,7 +76,7 @@ def Pivot(direction ="cw", angle= 90):
       print("specify cw or ccw")
     return 1
 
-def PivotPID(angle= 90, speed=10, kp, ki, kd):
+def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
     current_ang = gyro.angle
     timecounter = 0
 
