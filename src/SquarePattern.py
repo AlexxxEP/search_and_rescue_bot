@@ -1,25 +1,49 @@
 #!/usr/bin/env python3
+# ---  ---  ---  ---  ---  ---
+# file name:    main.py
+# author:       Alexandre EANG
+# date:         2023 12 11
+# ---  ---  ---
+# ---  ---  ---  ---  ---
+# file name:         SquarePattern.py
+# description :      Movement plus rectracting square pattern
+#
+#
+#
+# author:            Alexandre EANG
+# created on:        2023 12 11
+# last updated:      2023 12 11
+# updated by:        Alexandre EANG
+# comment :          * Applied template to this document
+# ---  ---   ---  ---  ---  ---
 
-print("Hello, World!")
 
 
+# ---  IMPORTS  ---  ---  ---  ---
 from ev3dev2.motor import *
 from ev3dev2.sensor.lego import *
 from time import sleep
+# ---  ---   ---  ---  ---  --
 
-#CONSTANTS
+
+
+# ---  DECLARATIONS  ---
+    # --- CONSTANTS
 gyro = GyroSensor()
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
 timeout = 3000
-
-#var
+    # --- VARIABLES
 current_ang= 0
 timecount = 0
 
 
 
+
+# ---  FUNCTION DEFINITION  ---
+# write function definitions here
+# ---  ---  ---  ---  ---  ---  ---
 def Straight ( speed ):
     wheels.on(speed, speed)
     print("moving straight at", speed, "speed !")
@@ -87,8 +111,9 @@ def Stop (  ):
 
 
 
+# ---  CODE START  ---
+print("Hello, World!")
 
-# MAINSCRIPT
 sleep(1)
 print("Init: DO NOT MOVE")
 gyro.calibrate()
@@ -108,10 +133,3 @@ while (timecount < timeout):
         timecount = 0
         Straight(20)
 Stop()
-      
-
-    #break
-  #if (timecount == timeout -2):
-      #print ("timed out")
-    #Stop()
-
