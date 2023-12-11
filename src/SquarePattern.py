@@ -133,9 +133,12 @@ def QuarterTurns( speed = 30, direction = "cw"):
     timecount = 0
 
     Straight(speed)
-    while (timecount < timeout):
+    while (true):
       timecount +=1
-
+      if ( timecount == timeout):
+        Stop()
+        return
+        
       if (color.color == 1):
             print("found edge")
             Stop()
