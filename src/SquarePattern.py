@@ -99,8 +99,9 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
             print("pid_speed", pid_speed)
             old_pid_speed = pid_speed
             print("old_pid_speed", old_pid_speed)
-            pid_speed_percent = pid_speed //100
-            wheels.on(pid_speed_percent, -pid_speed_percent)
+            if (pid_speed >= 100):
+                pid_speed =100
+            wheels.on(pid_speed, -pid_speed)
         Stop()
         return 0
 
