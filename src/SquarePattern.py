@@ -1,4 +1,6 @@
-print("Helloworld")
+#!/usr/bin/env python3
+
+print("Hello, World!")
 
 
 from ev3dev2.motor import *
@@ -23,7 +25,7 @@ def Straight ( speed ):
     print("moving straight at", speed, "speed !")
     return
 
-def Turn(direction, angle):
+def Pivot(direction, angle):
     current_ang = gyro.angle
     print(current_ang)
     timecounter = 0
@@ -41,6 +43,32 @@ def Turn(direction, angle):
              timecounter +=1
              print(gyro.angle)
              wheels.on(-10, 10)
+             if(timecounter == timeout):
+                break
+         Stop()
+         return
+    else:
+      print("specify cw or ccw")
+    return
+
+def Turn(direction):
+    current_ang = gyro.angle
+    print(current_ang)
+    timecounter = 0
+    if (direction == "cw"):
+        while (current_ang +180 >= gyro.angle ):
+            timecounter +=1
+            print(gyro.angle)
+            wheels.on(10, 0)
+            if(timecounter == timeout):
+                break
+        Stop()
+        return
+    elif (direction == "ccw"):
+         while (current_ang - 180 <= gyro.angle):
+             timecounter +=1
+             print(gyro.angle)
+             wheels.on(0, 10)
              if(timecounter == timeout):
                 break
          Stop()
@@ -76,8 +104,14 @@ sleep(1)
 Stop()
 print("found edge")
 sleep(1)
-Turn("cw", 360)
-sleep(10)
+Turn("cw")
+sleep(1)
+Stop()
+Turn("ccw")
+sleep(1)
+Stop()
+Turn("ccw")
+sleep(1)
 Stop()
     #break
   #if (timecount == timeout -2):
