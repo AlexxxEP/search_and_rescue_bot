@@ -10,7 +10,7 @@ gyro = GyroSensor()
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
-timeout = 1000
+timeout = 3000
 
 #var
 #current_ang= 0
