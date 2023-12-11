@@ -97,22 +97,16 @@ color.calibrate_white()
 sleep(1)
 
 
-#Straight(50)
-#while (timecount < timeout):
-  #timecount +=1
-  #if (color.color == 1):
-Stop()
-print("found edge")
-sleep(1)
-Turn("cw")
-sleep(1)
-Stop()
-Turn("ccw")
-sleep(1)
-Stop()
-Turn("ccw")
-sleep(1)
-Stop()
+Straight(50)
+while (timecount < timeout):
+  timecount +=1
+  if (color.color == 1):
+        print("found edge")
+        Stop()
+        print("turning now")
+        Turn("cw")
+        timecount = 0
+
     #break
   #if (timecount == timeout -2):
       #print ("timed out")
