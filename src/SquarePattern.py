@@ -6,7 +6,7 @@ from ev3dev2.sensor.lego import *
 from time import sleep
 
 #CONSTANTS
-gyro = GyroSensor()
+Gyro = GyroSensor()
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
