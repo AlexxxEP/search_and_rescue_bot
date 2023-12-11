@@ -13,7 +13,7 @@ wheels = MoveTank( OUTPUT_D, OUTPUT_A)
 timeout = 1000
 
 #var
-current_ang= 0
+#current_ang= 0
 timecount = 0
 
 
