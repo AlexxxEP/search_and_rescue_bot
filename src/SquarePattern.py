@@ -47,34 +47,34 @@ timecount = 0
 # ---  ---  ---  ---  ---  ---  ---
 def Straight ( speed ):
     wheels.on(speed, speed)
-    print("moving straight at", speed, "speed !")
     return
 
-def Pivot(direction, angle):
+def Pivot(direction ="cw", angle= 90):
     current_ang = gyro.angle
-    print(current_ang)
     timecounter = 0
+
     if (direction == "cw"):
         while (current_ang +angle >= gyro.angle ):
             timecounter +=1
-            print(gyro.angle)
-            wheels.on(10, -10)
             if(timecounter == timeout):
                 break
+
+            wheels.on(10, -10)
         Stop()
-        return
+        return 0
     elif (direction == "ccw"):
          while (current_ang - angle <= gyro.angle):
-             timecounter +=1
-             print(gyro.angle)
-             wheels.on(-10, 10)
-             if(timecounter == timeout):
+            if(timecounter == timeout):
                 break
+            timecounter +=1
+
+            wheels.on(-10, 10)
          Stop()
-         return
+         return 0
+
     else:
       print("specify cw or ccw")
-    return
+    return 1
 
 def Turn(direction):
     current_ang = gyro.angle
@@ -105,7 +105,6 @@ def Turn(direction):
 
 def Stop (  ):
     wheels.on(0, 0)
-    print("Stopping")
     return
 
 
@@ -119,26 +118,31 @@ wheels.gyro.calibrate()
 color.calibrate_white()
 print("Init: done, starting soon ...")
 
-try:
-    wheels.follow_gyro_angle(
-                    kp=11.3, ki=0.05, kd=3.2,
-                    speed=20,
-                    target_angle=45
-                )
-except FollowGyroAngleErrorTooFast:
-    Stop()
-    raise
+# try:
+#     wheels.follow_gyro_angle(
+#                     kp=11.3, ki=0.05, kd=3.2,
+#                     speed=20,
+#                     target_angle=45
+#                 )
+# except FollowGyroAngleErrorTooFast:
+#     Stop()
+#     raise
 
 #---  CODE TEST DEF START  ---
+def QuarterTurns( speed = 30, direction = "cw"):
+    timecount = 0
 
-# Straight(50)
-# while (timecount < timeout):
-#   timecount +=1
-#   if (color.color == 1):
-#         print("found edge")
-#         Stop()
-#         print("turning now")
-#         Turn("cw")
-#         timecount = 0
-#         Straight(20)
-# Stop()
+    Straight(speed)
+    while (timecount < timeout):
+      timecount +=1
+
+      if (color.color == 1):
+            print("found edge")
+            Stop()
+            print("turning now")
+            Turn(direction)
+            QuarterTurns(speed, direction)
+    return
+
+
+Stop()
