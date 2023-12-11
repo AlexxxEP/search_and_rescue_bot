@@ -73,7 +73,7 @@ sleep(1)
   #timecount +=1
   #if (color.color == 1):
 Stop()
-rint("found edge")
+print("found edge")
 sleep(1)
 Turn("cw")
 sleep(10)
