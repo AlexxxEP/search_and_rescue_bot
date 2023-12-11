@@ -32,7 +32,7 @@ from time import sleep
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
-tank.gyro = GyroSensor()
+wheels.gyro = GyroSensor()
 timeout = 3000
     # --- VARIABLES
 current_ang= 0
@@ -114,7 +114,7 @@ def Stop (  ):
 # ---  CODE START  ---
 print("Hello, World!")
 print("Init: DO NOT MOVE")
-tank.gyro.calibrate()
+wheels.gyro.calibrate()
 color.calibrate_white()
 print("Init: done, starting soon ...")
 
