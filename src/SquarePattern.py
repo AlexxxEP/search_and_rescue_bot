@@ -79,8 +79,8 @@ def Pivot(direction ="cw", angle= 90):
 def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
     current_ang = gyro.angle
     timecounter = 0
-    pid_speed = 0
-    old_pid_speed = 0
+    pid_speed = speed
+    old_pid_speed = speed
 
     if (angle == 0):
         return 1
@@ -92,12 +92,13 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
             if(timecounter == timeout):
                 print("Timed out")
                 return 1
-
             ang_delta = current_ang +angle - gyro.angle
-
+            print("ang_delta", angle_delta)
             pid_speed = (ang_delta/angle) * kp  
             pid_speed -= (pid_speed - old_pid_speed) * ki
+            print("pid_speed", pid_speed)
             old_pid_speed = pid_speed
+            print("old_pid_speed", old_pid_speed)
             pid_speed_percent = pid_speed //100
             wheels.on(pid_speed_percent, -pid_speed_percent)
         Stop()
