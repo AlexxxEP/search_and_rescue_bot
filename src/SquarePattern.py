@@ -118,6 +118,7 @@ tank.gyro.calibrate()
 color.calibrate_white()
 print("Init: done, starting soon ...")
 
+try:
 wheels.follow_gyro_angle(
                     kp=11.3, ki=0.05, kd=3.2,
                     speed=20,
@@ -125,9 +126,9 @@ wheels.follow_gyro_angle(
                     follow_for=3000,
                     ms=4500
                 )
-            except FollowGyroAngleErrorTooFast:
-                Stop()
-                raise
+except FollowGyroAngleErrorTooFast:
+    Stop()
+    raise
 
 
 
