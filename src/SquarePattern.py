@@ -1,6 +1,6 @@
 from ev3dev2.motor import *
 from ev3dev2.sensor.lego import *
-from time import wait
+from time import sleep
 
 #CONSTANTS
 wheel_diameter=55.5
@@ -11,20 +11,20 @@ timeout = 1000
 #var
 timecount = 0
 
-wait(100)
+sleep(100)
 print("init")
 color.calibrate_white()
-wait(100)
+sleep(100)
 
 Straight()
 while (timecount < timeout):
   timecount +=1
   if (color.color == 1):
     Stop()
-    wait(100)
+    sleep(100)
     Turn(cw)
     print("found edge")
-    wait(100)
+    sleep(100)
     Stop()
     break
   print ("timed out")
