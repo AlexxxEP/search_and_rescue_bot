@@ -25,15 +25,23 @@ def Straight ( speed ):
 
 def Turn(direction):
     current_ang = gyro.angle
-    
+    timecounter = 0
     if (direction == "cw"):
-        while (current_ang <= gyro.angle + 90 or current_ang >= gyro.angle -90):
-             wheels.on(10, -10)
+        while (current_ang >= gyro.angle + 90 or current_ang <= gyro.angle -90):
+            timecounter +=1
+            print(gyro.angle)
+            wheels.on(10, -10)
+            if(timecounter == timeout):
+                break
         Stop()
         return
     elif (direction == "ccw"):
-         while (current_ang <= gyro.angle + 90 or current_ang >= gyro.angle -90):
+         while (current_ang >= gyro.angle + 90 or current_ang <= gyro.angle -90):
+             timecounter +=1
+             print(gyro.angle)
              wheels.on(-10, 10)
+             if(timecounter == timeout):
+                break
          Stop()
          return
     else:
@@ -60,19 +68,19 @@ color.calibrate_white()
 sleep(1)
 
 
-Straight(50)
-while (timecount < timeout):
-  timecount +=1
-  if (color.color == 1):
+#Straight(50)
+#while (timecount < timeout):
+  #timecount +=1
+  #if (color.color == 1):
     Stop()
+    print("found edge")
     sleep(1)
     Turn("cw")
-    print("found edge")
     sleep(10)
     Stop()
-    break
-  if (timecount == timeout -2):
-      print ("timed out")
+    #break
+  #if (timecount == timeout -2):
+      #print ("timed out")
 
 Stop()
 
