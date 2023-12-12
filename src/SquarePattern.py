@@ -217,7 +217,28 @@ def QuarterTurns( speed = 30, direction = "cw", kp = 0.3):
                 angle = 180
             PivotPID(angle, speed, kp)
             QuarterTurns(speed, direction, kp)
+
+    Stop()
     return
 
 
-Stop()
+def RuntoLine (speed = 4):
+    timecount = 0
+    while (color.color != 1):
+        timecount +=1
+        if ( timecount == timeout):
+            Stop()
+            return
+            
+        Straight(speed)
+    while (color.color ==1):
+        timecount +=1
+        if ( timecount == timeout):
+            Stop()
+            return
+
+        Straight(2.5)
+        if (color.color !=1):
+            Stop()
+            break
+    return
