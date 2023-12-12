@@ -211,7 +211,7 @@ def QuarterTurns( speed = 30, direction = "cw", kp = 0.3):
             print("found edge")
             Stop()
             print("turning now")
-            if (direction == "cw")
+            if (direction == "cw"):
                 angle = -180
             else:
                 angle = 180
@@ -229,7 +229,7 @@ def RuntoLine (speed = 4):
         if ( timecount == timeout):
             Stop()
             return
-            
+
         Straight(speed)
     while (color.color ==1):
         timecount +=1
