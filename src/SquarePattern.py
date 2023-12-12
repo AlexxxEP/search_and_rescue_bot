@@ -94,10 +94,10 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
                 return 1
             ang_delta = current_ang +angle - gyro.angle
 
-            pid_speed -= ki * (pid_speed - old_pid_speed)
+            #pid_speed -= ki * (pid_speed - old_pid_speed)
 
-            pid_speed = kp * ang_delta 
-            old_pid_speed = pid_speed
+            pid_speed = speed + (kp * ang_delta)
+            #old_pid_speed = pid_speed
 
             print("ang_delta\tpid_speed")
             print(ang_delta, "\t", pid_speed, "\t",timecounter, "\n\n\n\n")
@@ -113,27 +113,28 @@ def PivotPID(angle= 90, speed=10, kp=0, ki=0, kd=0):
 
 
     elif (angle < 0):
+        ang_delta = current_ang +angle + gyro.angle
         while (current_ang + angle < gyro.angle -1):
             timecounter +=1
             if(timecounter >= timeout):
                 print("Timed out")
                 return 1
-            ang_delta = current_ang +angle - gyro.angle
+            ang_delta = gyro.angle- (current_ang +angle)
 
-            pid_speed -= ki * (pid_speed - old_pid_speed)
+            #pid_speed -= ki * (pid_speed - old_pid_speed)
 
-            pid_speed = kp * ang_delta 
-            old_pid_speed = pid_speed
+            pid_speed = speed + kp * ang_delta 
+            #old_pid_speed = pid_speed
 
             print("ang_delta\tpid_speed")
             print(ang_delta, "\t", pid_speed, "\t",timecounter, "\n\n\n\n")
 
-            if (pid_speed <= -100):
-                pid_speed =-100
-            elif (pid_speed >= 0):
-                pid_speed =0
+            if (pid_speed >= 100):
+                pid_speed =100
+            elif (pid_speed <= 0):
+                pid_speed = 0
 
-            wheels.on(pid_speed, -pid_speed)
+            wheels.on(-pid_speed, pid_speed)
         Stop()
         return 0
 
