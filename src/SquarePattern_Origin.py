@@ -37,6 +37,7 @@ wheels = MoveDifferential( OUTPUT_D, OUTPUT_A, EV3Tire, 16 * STUD_MM)
 gyro = GyroSensor()
 wheels.gyro = GyroSensor()
 timeout = 3000
+drive_distance = 1500
     # --- VARIABLES
 current_ang= 0
 timecount = 0
@@ -75,8 +76,8 @@ def find_and_grab_object():
         claw_motor_right.off()
 
 
-def Straight ( speed ):
-    wheels.on(speed, speed)
+def Straight_distance ( speed, drive_distance):
+    wheels.on_for_distance(speed, drive_distance)
     return
 
 def Pivot(direction ="cw", angle= 90):
@@ -236,6 +237,7 @@ def run_grab_return(speed,turnspeed, kp):
 print("Hello, World!")
 print("Init: DO NOT MOVE")
 wheels.gyro.calibrate()
+wheels.odometry_start()
 color.calibrate_white()
 print("Init: done, starting soon ...")
 
@@ -253,7 +255,7 @@ print("Init: done, starting soon ...")
 def QuarterTurns( speed = 30, direction = "cw", kp = 0.3):
     timecount = 0
 
-    Straight(speed)
+    Straight_distance(speed)
     while (True):
       timecount +=1
       if ( timecount == timeout):
@@ -277,22 +279,24 @@ def QuarterTurns( speed = 30, direction = "cw", kp = 0.3):
 
 def RuntoLine (speed = 4):
     timecount = 0
-    wheels.odometry_start()
     while (color.color != 1):
         timecount +=1
         if ( timecount == timeout):
             Stop()
             return
 
-        Straight(speed)
+        Straight_distance(speed)
     while (color.color ==1):
         timecount +=1
         if ( timecount == timeout):
             Stop()
             return
-
-        Straight(2.5)
+, distance
+        Straight_distance(2.5,distance)
         if (color.color !=1):
             Stop()
             break
     return
+def RetractingSquare() :
+    while (1) :
+        wheels.on_for_distance(40)
