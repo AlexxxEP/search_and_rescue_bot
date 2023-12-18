@@ -243,7 +243,7 @@ wheels.gyro.calibrate()
 color.calibrate_white()
 print("Init: done, starting soon ...")
 
-global realdirection = 1
+#realdirection = 1
 
 # try:
 #     wheels.follow_gyro_angle(
