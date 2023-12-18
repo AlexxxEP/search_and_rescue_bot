@@ -3,7 +3,7 @@ from ev3dev2.sensor.lego import UltrasonicSensor
 from time import sleep
 
 # Initialize motors for the claw
-claw_motor_left = MediumMotor(OUTPUT_A)
+#claw_motor_left = MediumMotor(OUTPUT_A)
 claw_motor_right = MediumMotor(OUTPUT_B)
 
 # Initialize ultrasonic sensor
