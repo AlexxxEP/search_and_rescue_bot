@@ -11,11 +11,11 @@ ultrasonic_sensor = UltrasonicSensor()
 
 # Define functions to control the claw movement
 def open_claw():
-    claw_motor_left.on_for_seconds(speed=50, seconds=1)
+    #claw_motor_left.on_for_seconds(speed=50, seconds=1)
     claw_motor_right.on_for_seconds(speed=-50, seconds=1)
 
 def close_claw():
-    claw_motor_left.on_for_seconds(speed=-50, seconds=1)
+    #claw_motor_left.on_for_seconds(speed=-50, seconds=1)
     claw_motor_right.on_for_seconds(speed=50, seconds=1)
 
 # Function to find and grab an object
@@ -34,7 +34,7 @@ def find_and_grab_object():
 
     except KeyboardInterrupt:
         # Stop motors and exit cleanly on Ctrl+C
-        claw_motor_left.off()
+        #claw_motor_left.off()
         claw_motor_right.off()
 
 # Run the function to find and grab an object
