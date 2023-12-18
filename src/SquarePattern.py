@@ -243,6 +243,8 @@ wheels.gyro.calibrate()
 color.calibrate_white()
 print("Init: done, starting soon ...")
 
+realdirection = 1
+
 # try:
 #     wheels.follow_gyro_angle(
 #                     kp=11.3, ki=0.05, kd=3.2,
@@ -256,7 +258,7 @@ print("Init: done, starting soon ...")
 #---  CODE TEST DEF START  ---
 def QuarterTurns( speed = 30, req_angle = 87, turnspeed =15, direction = "cw", kp = 0):
     timecount = 0
-
+    realdirection = -1 * realdirection
     Straight(speed)
     while (True):
       timecount +=1
@@ -268,11 +270,15 @@ def QuarterTurns( speed = 30, req_angle = 87, turnspeed =15, direction = "cw", k
             print("found edge")
             Stop()
             print("turning now")
-            if (direction == "cw"):
+            if (realdirection == 0):
                 angle = -1 * req_angle
+
             else:
-                angle = req_angle
+                realdirection = req_angle
             PivotPID(angle, turnspeed, kp)
+            Straight(speed)
+            sleep(1)
+            stop()
             QuarterTurns(speed, req_angle, turnspeed, direction, kp)
 
     Stop()
