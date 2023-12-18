@@ -1,10 +1,10 @@
-from ev3dev2.motor import LargeMotor, OUTPUT_B, OUTPUT_C
+from ev3dev2.motor import *
 from ev3dev2.sensor.lego import ColorSensor
 from time import sleep
 
 # Initialize motors for movement
-left_motor = LargeMotor(OUTPUT_B)
-right_motor = LargeMotor(OUTPUT_C)
+left_motor = MoveTank(OUTPUT_D, OUTPUT_A)
+#right_motor = LargeMotor(OUTPUT_C)
 
 # Initialize color sensor
 color_sensor = ColorSensor()
@@ -21,17 +21,17 @@ rotations_needed = distance_to_travel / wheel_circumference
 
 # Function to make the robot move forward by a given number of rotations
 def move_forward():
-    left_motor.on_for_rotations(speed=20, rotations=rotations_needed)
+    #left_motor.on_for_rotations(speed=20, rotations=rotations_needed)
     right_motor.on_for_rotations(speed=20, rotations=rotations_needed)
 
 # Function to make the robot turn right
 def turn_right():
-    left_motor.on_for_rotations(speed=20, rotations=rotations_needed / 2)
+    #left_motor.on_for_rotations(speed=20, rotations=rotations_needed / 2)
     right_motor.on_for_rotations(speed=-20, rotations=rotations_needed / 2)
 
 # Function to make the robot turn left
 def turn_left():
-    left_motor.on_for_rotations(speed=-20, rotations=rotations_needed / 2)
+    #left_motor.on_for_rotations(speed=-20, rotations=rotations_needed / 2)
     right_motor.on_for_rotations(speed=20, rotations=rotations_needed / 2)
 
 try:
