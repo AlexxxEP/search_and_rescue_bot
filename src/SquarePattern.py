@@ -243,7 +243,7 @@ wheels.gyro.calibrate()
 color.calibrate_white()
 print("Init: done, starting soon ...")
 
-realdirection = 1
+global realdirection = 1
 
 # try:
 #     wheels.follow_gyro_angle(
@@ -256,9 +256,9 @@ realdirection = 1
 #     raise
 
 #---  CODE TEST DEF START  ---
-def QuarterTurns( speed = 30, req_angle = 87, turnspeed =15, direction = "cw", kp = 0):
+def QuarterTurns( speed = 30, req_angle = 87, turnspeed =15, direction = "cw", kp = 0, state=1):
     timecount = 0
-    realdirection = -1 * realdirection
+    realdirection = -1 * state
     Straight(speed)
     while (True):
       timecount +=1
@@ -279,7 +279,7 @@ def QuarterTurns( speed = 30, req_angle = 87, turnspeed =15, direction = "cw", k
             Straight(speed)
             sleep(1)
             stop()
-            QuarterTurns(speed, req_angle, turnspeed, direction, kp)
+            QuarterTurns(speed, req_angle, turnspeed, direction, kp,realdirection)
 
     Stop()
     return
