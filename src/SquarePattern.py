@@ -217,9 +217,10 @@ def run_grab_return(speed,turnspeed, kp):
                 Stop()
                 print("Object detected - grabbing...")
                 open_claw()
-                sleep(2) # Adjust time to hold the object
+                while(ultrasonic_sensor.distance_centimeters > 6):
+                    Straight(5)
+                Stop()
                 close_claw()
-                sleep(1)
                 close_claw()
                 PivotPID(180, turnspeed, kp)
                 RuntoLine(speed)
