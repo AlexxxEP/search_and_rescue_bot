@@ -206,7 +206,7 @@ def Stop (  ):
     wheels.on(0, 0)
     return
 
-def run_grab_return(speed):
+def run_grab_return(speed,turnspeed, kp):
     Straight(speed)
     try:
         while True:
@@ -221,7 +221,7 @@ def run_grab_return(speed):
                 close_claw()
                 sleep(1)
                 close_claw()
-                PivotPID(180, 15, 0.3)
+                PivotPID(180, turnspeed, kp)
                 RuntoLine(speed)
                 open_claw()
                 Straight(-1*speed)
