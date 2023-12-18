@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # ---  ---  ---  ---  ---  ---
 # file name:    main.py
-# author:       Alexandre EANG
+# author:       Alexandre MENSAH
 # date:         2023 12 11
 # ---  ---  ---
 # ---  ---  ---  ---  ---
 # file name:         SquarePattern.py
-# description :      Movement plus rectracting square pattern
+# description :      Movement plus rectracting square pattern + return to the origin after grabbing the object
 #
 #
 #
@@ -33,7 +33,7 @@ ultrasonic_sensor = UltrasonicSensor()
 claw_motor_right = MediumMotor(OUTPUT_B)
 wheel_diameter=55.5
 color = ColorSensor()
-wheels = MoveTank( OUTPUT_D, OUTPUT_A)
+wheels = MoveDifferential( OUTPUT_D, OUTPUT_A, EV3Tire, 16 * STUD_MM)
 gyro = GyroSensor()
 wheels.gyro = GyroSensor()
 timeout = 3000
@@ -221,11 +221,7 @@ def run_grab_return(speed,turnspeed, kp):
                 close_claw()
                 sleep(1)
                 close_claw()
-                PivotPID(180, turnspeed, kp)
-                RuntoLine(speed)
-                open_claw()
-                Straight(-1*speed)
-                sleep(1)
+                wheels.on_to_coordinates(SpeedRPM(20),0,0)
                 Stop()
                 break # Exit the loop after grabbing the object
 
@@ -281,6 +277,7 @@ def QuarterTurns( speed = 30, direction = "cw", kp = 0.3):
 
 def RuntoLine (speed = 4):
     timecount = 0
+    wheels.odometry_start()
     while (color.color != 1):
         timecount +=1
         if ( timecount == timeout):
