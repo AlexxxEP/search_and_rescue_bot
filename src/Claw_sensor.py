@@ -18,6 +18,8 @@ def close_claw():
     #claw_motor_left.on_for_seconds(speed=-50, seconds=1)
     claw_motor_right.on_for_seconds(speed=50, seconds=1)
 
+
+
 # Function to find and grab an object
 def find_and_grab_object():
     try:
@@ -29,6 +31,8 @@ def find_and_grab_object():
                 print("Object detected - grabbing...")
                 close_claw()
                 sleep(2) # Adjust time to hold the object
+                open_claw()
+                sleep(1)
                 open_claw()
                 break # Exit the loop after grabbing the object
 
