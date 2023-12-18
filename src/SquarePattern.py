@@ -29,6 +29,8 @@ from time import sleep
 
 # ---  DECLARATIONS  ---
     # --- CONSTANTS
+ultrasonic_sensor = UltrasonicSensor()
+claw_motor_right = MediumMotor(OUTPUT_B)
 wheel_diameter=55.5
 color = ColorSensor()
 wheels = MoveTank( OUTPUT_D, OUTPUT_A)
@@ -45,6 +47,34 @@ timecount = 0
 # ---  FUNCTION DEFINITION  ---
 # write function definitions here
 # ---  ---  ---  ---  ---  ---  ---
+
+def open_claw():
+    claw_motor_right.on_for_seconds(speed=50, seconds=1)
+
+def close_claw():
+    claw_motor_right.on_for_seconds(speed=-50, seconds=1)
+
+def find_and_grab_object():
+    try:
+        while True:
+            distance = ultrasonic_sensor.distance_centimeters
+            print("Distance to object:", distance, "cm")
+
+            if distance <= 10: # Adjust this distance according to your needs
+                print("Object detected - grabbing...")
+                open_claw()
+                sleep(2) # Adjust time to hold the object
+                close_claw()
+                sleep(1)
+                close_claw()
+                break # Exit the loop after grabbing the object
+
+    except KeyboardInterrupt:
+        # Stop motors and exit cleanly on Ctrl+C
+        #claw_motor_left.off()
+        claw_motor_right.off()
+
+
 def Straight ( speed ):
     wheels.on(speed, speed)
     return
@@ -176,7 +206,33 @@ def Stop (  ):
     wheels.on(0, 0)
     return
 
+def run_grab_return(speed):
+    Straight(speed)
+    try:
+        while True:
+            distance = ultrasonic_sensor.distance_centimeters
+            print("Distance to object:", distance, "cm")
 
+            if distance <= 10: # Adjust this distance according to your needs
+                Stop()
+                print("Object detected - grabbing...")
+                open_claw()
+                sleep(2) # Adjust time to hold the object
+                close_claw()
+                sleep(1)
+                close_claw()
+                PivotPID(180, 15, 0.3)
+                RuntoLine(speed)
+                open_claw()
+                Straight(-1*speed)
+                sleep(1)
+                Stop()
+                break # Exit the loop after grabbing the object
+
+    except KeyboardInterrupt:
+        # Stop motors and exit cleanly on Ctrl+C
+        #claw_motor_left.off()
+        claw_motor_right.off()
 
 
 
