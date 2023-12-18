@@ -274,7 +274,7 @@ def QuarterTurns( speed = 30, req_angle = 87, turnspeed =15, direction = "cw", k
                 angle = -1 * req_angle
 
             else:
-                realdirection = req_angle
+                angle = req_angle
             PivotPID(angle, turnspeed, kp)
             Straight(speed)
             sleep(1)
