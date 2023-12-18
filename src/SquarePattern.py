@@ -254,7 +254,7 @@ print("Init: done, starting soon ...")
 #     raise
 
 #---  CODE TEST DEF START  ---
-def QuarterTurns( speed = 30, direction = "cw", kp = 0.3):
+def QuarterTurns( speed = 30, req_angle = 87, turnspeed =15, direction = "cw", kp = 0):
     timecount = 0
 
     Straight(speed)
@@ -269,11 +269,11 @@ def QuarterTurns( speed = 30, direction = "cw", kp = 0.3):
             Stop()
             print("turning now")
             if (direction == "cw"):
-                angle = -180
+                angle = -1 * req_angle
             else:
-                angle = 180
-            PivotPID(angle, speed, kp)
-            QuarterTurns(speed, direction, kp)
+                angle = req_angle
+            PivotPID(angle, turnspeed, kp)
+            QuarterTurns(speed, req_angle, turnspeed, direction, kp)
 
     Stop()
     return
