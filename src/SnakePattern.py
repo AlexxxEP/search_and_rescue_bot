@@ -3,7 +3,7 @@ from ev3dev2.sensor.lego import ColorSensor
 from time import sleep
 
 # Initialize motors for movement
-left_motor = MoveTank(OUTPUT_D, OUTPUT_A)
+right_motor = MoveTank(OUTPUT_D, OUTPUT_A)
 #right_motor = LargeMotor(OUTPUT_C)
 
 # Initialize color sensor
