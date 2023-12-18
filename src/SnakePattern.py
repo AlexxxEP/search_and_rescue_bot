@@ -22,17 +22,17 @@ rotations_needed = distance_to_travel / wheel_circumference
 # Function to make the robot move forward by a given number of rotations
 def move_forward():
     #left_motor.on_for_rotations(speed=20, rotations=rotations_needed)
-    right_motor.on_for_rotations(20, rotations_needed)
+    right_motor.on_for_rotations(20, rotations_needed,10)
 
 # Function to make the robot turn right
 def turn_right():
     #left_motor.on_for_rotations(speed=20, rotations=rotations_needed / 2)
-    right_motor.on_for_rotations(-20, rotations_needed / 2)
+    right_motor.on_for_rotations(-20, rotations_needed / 2,10)
 
 # Function to make the robot turn left
 def turn_left():
     #left_motor.on_for_rotations(speed=-20, rotations=rotations_needed / 2)
-    right_motor.on_for_rotations(20, rotations_needed / 2)
+    right_motor.on_for_rotations(20, rotations_needed / 2,10)
 
 try:
     # Explore the 1.5x1.5 meters square zone in a snake pattern
