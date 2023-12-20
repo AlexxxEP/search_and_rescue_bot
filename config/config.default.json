@@ -1,0 +1,13 @@
+{
+  "ports":{
+
+    "claw"        : "OUTPUT_B",
+    "left_wheel"  : "OUTPUT_A",
+    "right_wheel" : "OUTPUT_D"
+  },
+  "physical":{
+
+    "wheel_diameter"  : "5.5",
+    "wheel_trackdist" : "12"
+  }
+}
