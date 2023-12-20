@@ -1,12 +1,21 @@
 {
-  "ports":{
-
-    "claw"        : "OUTPUT_B",
-    "right_wheel" : "OUTPUT_C"
+  "port": {
+    "claw": "OUTPUT_B",
+    "lwheel": "OUTPUT_D",
+    "rwheel": "OUTPUT_A"
   },
-  "physical":{
-
-    "wheel_diameter"  : "5.5",
-    "wheel_trackdist" : "12"
+  "physical": {
+    "wheeldiameter": "55",
+    "trackdist": "120"
+  },
+  "target": {
+    "diameter": "60",
+    "color": "red"
+  },
+  "environment": {
+    "width": "1500",
+    "length": "1500",
+    "floorcolor": "white",
+    "edgecolor": "black"
   }
 }
