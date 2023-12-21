@@ -1,10 +1,4 @@
 '''input
-Y
-A
-C
-Y
-A
-D
 N
 '''
 
@@ -20,14 +14,13 @@ def DEBUG(userinput):
 #!/usr/bin/env python3
 # ---  ---  ---  ---  ---  --- ---  ---  ---
 # file name:    main.py
-# author:      
+# author:      TECHNOBOTS
 # date:        2023 11 27
 # ---  ---  ---
 # ---  ---  ---  ---  ---
-# file name:         % name of file + extension %
-# description :
-#
-#
+# file name:         main.py
+# description :      main script handling state machine,
+#                    flags, user inputs, etc.
 #
 # author:            Alexandre MENSAH
 # created on:        2023 11 27
@@ -53,6 +46,8 @@ from time import sleep
 # --- CONSTANTS / CONFIG
 
 # --- VARIABLES
+MACHINE_STATE = 'STATE_INIT'
+MACHINE_STATE_OLD = 'STATE_INIT'
 ERR_port_claw = False
 ERR_port_wheels = False
 # ---  ---  ---  ---  ---  ---
@@ -64,13 +59,10 @@ def main():
     """
     Execute this function to start the program.
     """
+    print("\nProgram starting ...\n")
 
-    # Program start
-    print("\nStarting program now ...\n")
-
-
-    # Checking connections
-    init_checkports = init_check()
+    init_ports()
+    
     if (ERR_port_wheels or ERR_port_claw):
         print("\nCheck connection on robot according to current configuration.")
         print("Robot configuration can be found under /config directory.")
@@ -86,8 +78,14 @@ def main():
         if (check == 1):
             return
 
-    #claw_open()
-    #wheels.on(50,50)
+
+    # while (True):
+    #     event = eventlisten_statemachine()
+    #     eventlisten_flags()
+
+    #     if (event == 'None'):
+    #         pass
+
     return
 
 
@@ -124,13 +122,19 @@ def init(config='user'):
     global SYS_envi_length      
     global SYS_envi_floorcolor  
     global SYS_envi_edgecolor   
-    
+
+    try:
+        cfg_user_json = open('../config/config.user.json', 'r')
+        cfg_user = json.load(cfg_user_json)
+    except:
+        cfg_user_json = open('../config/config.user.json','w')
+        config = 'reset'
+    finally:
+        cfg_user_json.close()
 
 
     with open('../config/config.default.json', 'r') as cfg_def_json:
-        cfg_def = json.load(cfg_def_json)
-        
-
+        cfg_def = json.load(cfg_def_json)     
         if (config == 'user'):
             with open('../config/config.user.json', 'r') as cfg_user_json:
                 cfg_user = json.load(cfg_user_json)
@@ -145,6 +149,7 @@ def init(config='user'):
                 SYS_envi_length             = cfg_user['environment']['length']
                 SYS_envi_floorcolor         = cfg_user['environment']['floorcolor']
                 SYS_envi_edgecolor          = cfg_user['environment']['edgecolor']
+            cfg_user_json.close()
         elif (config == 'default'):
             SYS_port_lwheel             = cfg_def['port']['lwheel']
             SYS_port_rwheel             = cfg_def['port']['rwheel']
@@ -171,28 +176,22 @@ def init(config='user'):
             SYS_envi_length             = cfg_def['environment']['length']
             SYS_envi_floorcolor         = cfg_def['environment']['floorcolor']
             SYS_envi_edgecolor          = cfg_def['environment']['edgecolor']
-
-
-    # wheels = MoveTank(left_wheel_port, right_wheel_port)
-    # claw = MediumMotor(claw_port)
-
     return
     
 
-def init_check():
+def init_ports():
     """
     """
     global ERR_port_wheels
     global ERR_port_claw
-    DEBUG(ERR_port_wheels)
     try:
-        wheels
+        wheels = MoveTank(SYS_port_lwheel,SYS_port_rwheel)
         ERR_port_wheels =False
     except:
         print("\t>>> Ports for wheeldrive have not been defined.")
         ERR_port_wheels =True
     try:
-        claw
+        claw = MediumMotor(SYS_port_claw)
         ERR_port_claw =False
     except:
         print("\t>>> Port for claw has not been defined.")
@@ -279,34 +278,4 @@ def init_checkclaw(userinput):
 init()
 
 main()
-
-
-
-
-
-
-
-
-
-
-# with open('../config/config.default.json','r') as cfg:
-#     prout = json.load(cfg)["ports"]
-
-# with open('../config/config.user.json','r') as cfg:
-#     caca = json.load(cfg)["ports"]
-
-
-# try:
-#     lwheelport = prout["left_wheel"]
-#     lwheelport = caca["left_wheel"]
-# except:
-#     pass
-# try:
-#     rwheelport = prout["right_wheel"]
-#     rwheelport = caca["right_wheel"]
-# except:
-#     pass
-
-# print(lwheelport)
-# print(rwheelport)
 # ---  ---  ---  ---  ---
