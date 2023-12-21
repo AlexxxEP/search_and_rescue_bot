@@ -1,8 +1,8 @@
 {
   "port": {
-    "claw": "OUTPUT_B",
-    "lwheel": "OUTPUT_D",
-    "rwheel": "OUTPUT_A"
+    "claw": "B",
+    "lwheel": "D",
+    "rwheel": "A"
   },
   "physical": {
     "wheeldiameter": "55",
