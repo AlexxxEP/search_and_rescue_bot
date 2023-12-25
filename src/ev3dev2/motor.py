@@ -26,6 +26,8 @@ import select
 import time
 import _thread
 
+print("# importing {}".format(__name__))
+
 # python3 uses collections
 # micropython uses ucollections
 try:

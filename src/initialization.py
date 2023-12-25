@@ -1,11 +1,3 @@
-
-USER_DEBUG = False
-
-def DEBUG(userinput):
-    if (USER_DEBUG):
-        print("\n\t> " + userinput)
-    return
-
 #!/usr/bin/env python3
 # ---  ---  ---  ---  ---
 # file name:         initialization.py
@@ -24,6 +16,7 @@ def DEBUG(userinput):
 
 
 # ---  IMPORTS  ---  ---  ---  ---
+print("# importing {}".format(__name__))
 # python modules
 import json
 
@@ -35,6 +28,14 @@ from ev3dev2.sensor.lego import *
 
 
 # ---  DECLARATIONS  ---
+PERIPH = {
+    "wheels" : None,
+    "claw" : None,
+    "gyro" : None,
+    "color" : None,
+    "sonar" : None
+}
+
 # SYS_port_lwheel
 # SYS_port_rwheel
 # SYS_port_claw
@@ -152,44 +153,38 @@ def init(config='user'):
 def init_ports():
     """
     """
-    # global ERR["port_wheels"]
-    # global ERR["port_claw"]
-    # global ERR["port_gyro"]
-    # global ERR["port_color"]
-    # global ERR["port_sonar"]
-
     ERR_msg = []
 
     try:
-        wheels = MoveTank(SYS_port_lwheel,SYS_port_rwheel)
+        PERIPH["wheels"] = MoveTank(SYS_port_lwheel,SYS_port_rwheel)
         ERR["port_wheels"] =False
     except Exception as e_msg:
         ERR_msg.append(e_msg)
         ERR["port_wheels"] =True
 
     try:
-        claw = MediumMotor(SYS_port_claw)
+        PERIPH["claw"] = MediumMotor(SYS_port_claw)
         ERR["port_claw"] =False
     except Exception as e_msg:
         ERR_msg.append(e_msg)
         ERR["port_claw"] =True
    
     try:
-        gyro = GyroSensor()
+        PERIPH["wheels"].gyro = GyroSensor()
         ERR["port_gyro"] =False
     except Exception as e_msg:
         ERR_msg.append(e_msg)
         ERR["port_gyro"] =True
   
     try:
-        color = ColorSensor()
+        PERIPH["color"] = ColorSensor()
         ERR["port_color"] =False
     except Exception as e_msg:
         ERR_msg.append(e_msg)
         ERR["port_color"] =True
   
     try:
-        sonar = UltrasonicSensor()
+        PERIPH["sonar"] = UltrasonicSensor()
         ERR["port_sonar"] =False
     except Exception as e_msg:
         ERR_msg.append(e_msg)
@@ -202,16 +197,15 @@ def init_ports():
         print("For permanent changes, use init_configure() to modify robot configuration.\n")
 
     for msg in ERR_msg:
-        print(f"\t>>> {msg}")
+        print("\t>>> {}".format(msg))
 
-    return ERR
+    return ERR, PERIPH
 
 
 def init_checkwheels(userinput="Y"):
     """
     remediates un-initialized wheels port
     """
-    DEBUG(userinput)
 
     if (userinput == "N" ):
         print("\n\nExiting ...")
@@ -220,15 +214,13 @@ def init_checkwheels(userinput="Y"):
     elif (userinput == "Y" ):
         print("\n[?] Register left motor port : ")
         user_leftmotorport = input(" |  (A/B/C/D)\n").upper()
-        DEBUG(user_leftmotorport)
         print("\n[?] Register left motor port : ")
         user_rightmotorport = input(" |  (A/B/C/D)\n").upper()
-        DEBUG(user_rightmotorport)
         try:
             wheels = MoveTank('ev3-ports:out'+user_leftmotorport,'ev3-ports:out'+user_rightmotorport)
         except Exception as error:
             print("\n\nAssignement of ports for wheeldrive was unsuccesful.")
-            print(f"\n\t>>> {error}\n")
+            print("\n\t>>> {}\n".format(error))
             print("\n[?] Would you like to select different ports ?")
             checkinput = input(" |  (Y: proceed / N: cancel)\n").upper()
             check = init_checkwheels(checkinput)
@@ -249,10 +241,6 @@ def init_checkclaw(userinput):
     """
     remediates un-initialized claw port
     """
-    if(USER_DEBUG):
-        print("\n\t> " + userinput) # just for seeing inputs in console (Alexandre EANG)
-
-
     if (userinput == "N"):
         print("\n\nExiting ...")
         return 1
@@ -260,13 +248,12 @@ def init_checkclaw(userinput):
     elif (userinput == "Y"):
         print("[?] Register claw port :")
         user_clawport = input("\n |  (A/B/C/D)\n").upper()
-        DEBUG(user_clawport)
 
         try:
             claw = MediumMotor('ev3-ports:out'+user_clawport)
         except Exception as error:
             print("\n\nAssignement of port for claw was unsuccesful.\n\n")
-            print(f"\n\t>>> {error}\n")
+            print("\n\t>>> {}\n".format(error))
             print("\n[?] Would you like to select a different port ?")
             checkinput = input(" |  (Y: proceed / N: cancel)\n").upper()
             check = init_checkclaw(checkinput)
@@ -280,10 +267,11 @@ def init_checkclaw(userinput):
         print("\n\t>>> Incorrect argument.")
         print("[?] Setup port for claw now ?")
         checkinput = input(" |  (Y: proceed / N: cancel)\n").upper()
-        DEBUG(checkinput)
         check = init_checkclaw(checkinput)
         return check
     return
+
+
 # ---  ---  ---  ---  ---  ---  ---
 
 

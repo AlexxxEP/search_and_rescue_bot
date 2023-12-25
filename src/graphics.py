@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# #!/usr/bin/env python3
+#!/usr/bin/env python3
 # ---  ---  ---  ---  ---
 # file name:         graphics.py
 # description :		 collection of graphical assets
@@ -13,19 +12,22 @@
 # 				 	 * Added 2 logo variants
 #					 * Added console clear
 # ---  ---   ---  ---  ---  ---
-
+print("# importing {}".format(__name__))
 
 
 
 # ---  IMPORTS  ---  ---  ---  ---
 # ---  ---   ---  ---  ---  ---
-
-
+from time import sleep
+# import threading
 
 # ---  DECLARATIONS  ---
 # --- CONSTANTS / CONFIG
 
-# --- GRAPHIC RESSOURCES
+# --- GRAPHIC RESSOURCES 
+loading_flag = True
+
+# --- GRAPHIC RESSOURCES 
 d_lw=[
 	# --- line 1
 	{
@@ -193,13 +195,81 @@ d_clw=[
 		'c' :('    ||'),
 		'o' :('')
 	},
-
 ]
 # ---  ---  ---  ---  ---  ---
 
 
 
 # ---  FUNCTION DEFINITION  ---
+def CLEAR_CONSOLE(n=50):
+	for k in range(n):
+		print("\n")
+	return
+
+def loading_animation(arg='',length=8, timeout=500):
+	counter = 0
+	global loading_flag
+	loading_flag=True
+	
+	bar = []
+	for k in range(length):
+		bar.append('-')
+
+	while True:
+		counter += 1*length
+		if (counter > timeout):
+			print("\n\t>>> TIMED OUT")
+			return
+
+		for k in range(0,length):
+			string=''
+			bar[k] = '\033[1;30;46m \033[1;37;40m'
+			for j in range(0,length):
+				string += bar[j]
+			# CLEAR_CONSOLE(5)
+			# print(arg)
+			print("||"+string+"\033[0;0;0m||"+arg)
+			sleep(0.01)
+			if loading_flag!=True:
+				return
+
+		for k in range(0,length):
+			string=''
+			bar[k] = '\033[1;37;40m-\033[1;37;40m'
+			for j in range(0,length):
+				string += bar[j]
+			# CLEAR_CONSOLE(5)
+			# print(arg)
+			print("||"+string+"\033[0;0;0m||"+arg)
+			sleep(0.01)
+			if loading_flag!=True:
+				return
+
+		for k in range(0,length):
+			string=''
+			bar[k] = '\033[1;30;46m \033[1;37;40m'
+			for j in range(0,length):
+				string += bar[length-j-1]
+			# CLEAR_CONSOLE(5)
+			# print(arg)
+			print("||"+string+"\033[0;0;0m||"+arg)
+			sleep(0.01)
+			if loading_flag!=True:
+				return
+
+		for k in range(0,length):
+			string=''
+			bar[k] = '\033[1;37;40m-\033[1;37;40m'
+			for j in range(0,length):
+				string += bar[length-j-1]
+			# CLEAR_CONSOLE(5)
+			# print(arg)
+			print("||"+string+"\033[0;0;0m||"+arg)
+			sleep(0.01)
+			if loading_flag!=True:
+				return
+	return
+
 def TECHNOBOTS_LOGO(style='slant'):
 	if (style == 'slant'):
 		print("______________________________________________________________")
@@ -221,75 +291,88 @@ def TECHNOBOTS_LOGO(style='slant'):
 		print("                                                                                                 \\|_________|")
 	return
 
-def CLEAR_CONSOLE(n=50):
-	for k in range(n):
-		print("\n")
-	return
-
 def ROBOT(lw_status='n' , rw_status='n', clw_status='n'):
-	d_lw
-	d_rw
-	d_clw
-	print("\u2593 aze \u2592 aze \u1F601")
-	print(b'\xF0\x9F\x98\x81'.decode('utf-8'))
 	lws=lw_status
 	rws=rw_status
 	clws=clw_status
 
-	print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
+	# SYNTAX FOR PYTHON 3.6+
+	
+	# print(f"{d_lw[0][lws][0]} |▓▓▓▓▓▓▓▓▓\\      {d_lw[0][lws][1]}")
+	# print(f"{d_lw[1][lws][0]}||▓▓▓▓▓▓▓▓▓▓|\\    {d_lw[1][lws][1]}")
+	# print(f"{d_lw[2][lws][0]} \\____..____\\|   {d_lw[2][lws][1]}")
+	# print(f" _______________________||____     _____          {d_clw[0][clws]}")
+	# print(f"|▓[             ▓▓▓▓▓▓▓▓▓▓▓▓▓▓|\\  |▓▓   |        {d_clw[1][clws]}")
+	# print(f"|▓[             ▓|          |▓||  |▓▓___|    ___  {d_clw[2][clws]}")
+	# print(f"|▓[             ▓|          |▓|| |▓_________/  [) {d_clw[3][clws]}")
+	# print(f"|▓[       ^     ▓|          |▓|| |▓     ▓▓▓▓|__[) ====___    {d_clw [9][clws]}")
+	# print(f"|▓[     < □ >   ▓|          |▓|| |▓     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    {d_clw[10][clws]}")
+	# print(f"|▓[       v     ▓|          |▓|| |▓_____▓▓▓▓|  [) ====	     {d_clw[11][clws]}")
+	# print(f"|▓[             ▓|          |▓|| |▓         \\__[){d_clw[4][clws]}")
+	# print(f"|▓[             ▓|__________|▓|| |▓               {d_clw[5][clws]}")
+	# print(f"|▓[_____________▓▓▓▓▓▓▓▓▓▓▓▓▓▓||                  {d_clw[6][clws]}")
+	# print(f"\\_\\____________________.._____\\|               {d_clw[7][clws]}")
+	# print(f"     \\____||           ||                        {d_clw[8][clws]}")
+	# print(f"{d_rw[0][rws][0]}  |▓▓▓▓▓▓▓▓▓\\     {d_rw[0][rws][1]}")
+	# print(f"{d_rw[1][rws][0]} ||▓▓▓▓▓▓▓▓▓▓|\\   <[▓▓▓| {d_rw[1][rws][1]}")
+	# print(f"{d_rw[2][rws][0]}  \\__________\\|   <[▓▓▓| {d_rw[2][rws][1]}")
+	# print('')
 
-	print(f"{d_lw[0][lws][0]} |▓▓▓▓▓▓▓▓▓\\      {d_lw[0][lws][1]}					")
-	print(f"{d_lw[1][lws][0]}||▓▓▓▓▓▓▓▓▓▓|\\    {d_lw[1][lws][1]}					")
-	print(f"{d_lw[2][lws][0]} \\____..____\\|   {d_lw[2][lws][1]}					")
-	print(f" _______________________||____     _____          {d_clw[0][clws]}		")
-	print(f"|▓[             ▓▓▓▓▓▓▓▓▓▓▓▓▓▓|\\  |▓▓   |        {d_clw[1][clws]}		")
-	print(f"|▓[             ▓|          |▓||  |▓▓___|    ___  {d_clw[2][clws]}		")
-	print(f"|▓[             ▓|          |▓|| |▓_________/  [) {d_clw[3][clws]}		")
-	print(f"|▓[       ^     ▓|          |▓|| |▓     ▓▓▓▓|__[) ====___    {d_clw [9][clws]}")
-	print(f"|▓[     < □ >   ▓|          |▓|| |▓     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    {d_clw[10][clws]}")
-	print(f"|▓[       v     ▓|          |▓|| |▓_____▓▓▓▓|  [) ====	     {d_clw[11][clws]}")
-	print(f"|▓[             ▓|          |▓|| |▓         \\__[){d_clw[4][clws]}		")
-	print(f"|▓[             ▓|__________|▓|| |▓               {d_clw[5][clws]}		")
-	print(f"|▓[_____________▓▓▓▓▓▓▓▓▓▓▓▓▓▓||                  {d_clw[6][clws]}		")
-	print(f"\\_\\____________________.._____\\|               {d_clw[7][clws]}		")
-	print(f"     \\____||           ||                        {d_clw[8][clws]}		")
-	print(f"{d_rw[0][rws][0]}  |▓▓▓▓▓▓▓▓▓\\     {d_rw[0][rws][1]}					")
-	print(f"{d_rw[1][rws][0]} ||▓▓▓▓▓▓▓▓▓▓|\\   <[▓▓▓| {d_rw[1][rws][1]}			")
-	print(f"{d_rw[2][rws][0]}  \\__________\\|   <[▓▓▓| {d_rw[2][rws][1]}			")
+	# SYNTAX FOR PYTHON 3.5.4
+	
+	print("{} |▓▓▓▓▓▓▓▓▓\\      {}".format(d_lw[0][lws][0],d_lw[0][lws][1]))
+	print("{}||▓▓▓▓▓▓▓▓▓▓|\\    {}".format(d_lw[1][lws][0],d_lw[1][lws][1]))
+	print("{} \\____..____\\|   {}".format(d_lw[2][lws][0],d_lw[2][lws][1]))
+	print(" _______________________||____     _____          {}".format(d_clw[0][clws]))
+	print("|▓[             ▓▓▓▓▓▓▓▓▓▓▓▓▓▓|\\  |▓▓   |        {}".format(d_clw[1][clws]))
+	print("|▓[             ▓|          |▓||  |▓▓___|    ___  {}".format(d_clw[2][clws]))
+	print("|▓[             ▓|          |▓|| |▓_________/  [) {}".format(d_clw[3][clws]))
+	print("|▓[       ^     ▓|          |▓|| |▓     ▓▓▓▓|__[) ====___    {}".format(d_clw [9][clws]))
+	print("|▓[     < □ >   ▓|          |▓|| |▓     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    {}".format(d_clw[10][clws]))
+	print("|▓[       v     ▓|          |▓|| |▓_____▓▓▓▓|  [) ====	     {}".format(d_clw[11][clws]))
+	print("|▓[             ▓|          |▓|| |▓         \\__[){}".format(d_clw[4][clws]))
+	print("|▓[             ▓|__________|▓|| |▓               {}".format(d_clw[5][clws]))
+	print("|▓[_____________▓▓▓▓▓▓▓▓▓▓▓▓▓▓||                  {}".format(d_clw[6][clws]))
+	print("\\_\\____________________.._____\\|               {}".format(d_clw[7][clws]))
+	print("     \\____||           ||                        {}".format(d_clw[8][clws]))
+	print("{}  |▓▓▓▓▓▓▓▓▓\\     {}".format(d_rw[0][rws][0],d_rw[0][rws][1]))
+	print("{} ||▓▓▓▓▓▓▓▓▓▓|\\   <[▓▓▓| {}".format(d_rw[1][rws][0],d_rw[1][rws][1]))
+	print("{}  \\__________\\|   <[▓▓▓| {}".format(d_rw[2][rws][0],d_rw[2][rws][1]))
 	print('')
 	return
 
+	# COLOR HIGHLIGHT TOOL
+	# --- --- --- --- ---
+	# def print_format_table():
+	#     """
+	#     prints table of formatted text format options
+	#     """
+	#     for style in range(8):
+	#         for fg in range(30,38):
+	#             s1 = ''
+	#             for bg in range(40,48):
+	#                 format = ';'.join([str(style), str(fg), str(bg)])
+	#                 s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
+	#             print(s1)
+	#         print('\n')
+	# print_format_table()
+
+	# WRAPPER FOR ROBOT DISLAY
+	# --- --- --- --- ---
+	# def DisplayRobot_WPR():
+	# global lws
+	# global rws
+	# global clws
+	# while (DisplayRobot == True):
+	# 	CLEAR_CONSOLE(30)
+	# 	ROBOT(lws,rws,clws)
+	# 	sleep(0.3)
+	# return
 
 # ---  ---  ---  ---  ---  ---  ---
 
 
 
-
 # ---  CODE START  ---
-# ROBOT('d','r','c')
-# print('')
 
-def print_format_table():
-    """
-    prints table of formatted text format options
-    """
-    for style in range(8):
-        for fg in range(30,38):
-            s1 = ''
-            for bg in range(40,48):
-                format = ';'.join([str(style), str(fg), str(bg)])
-                s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
-            print(s1)
-        print('\n')
-
-# print_format_table()
-
-CRED = '\033[91m'
-CEND = '\033[0m'
-
-def print_red(thing):
-	print(CRED+thing+CEND)
-	return
-
-
-print_red(" ||▓▓▓▓▓▓▓▓▓▓|\\   <[▓▓▓| ")
+# loading_animation('# Importing {}'.format(__name__), 16)

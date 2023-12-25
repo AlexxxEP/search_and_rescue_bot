@@ -1,16 +1,3 @@
-'''input
-Y
-A
-B
-N
-'''
-USER_DEBUG = True
-
-def DEBUG(userinput):
-    if (USER_DEBUG):
-        print("\n\t> " + userinput)
-    return
-
 #!/usr/bin/env python3
 # ---  ---  ---  ---  ---  --- ---  ---  ---
 # file name:    main.py
@@ -29,13 +16,16 @@ def DEBUG(userinput):
 # comment :          * Setup event handling
 # ---  ---   ---  ---  ---  ---
 
+
+
 #______________________________________________________________
 #   ____________________  ___   ______  ____  ____  ___________
 #  /_  __/ ____/ ____/ / / / | / / __ \/ __ )/ __ \/_  __/ ___/
 #   / / / __/ / /   / /_/ /  |/ / / / / __  / / / / / /  \__ \ 
 #  / / / /___/ /___/ __  / /|  / /_/ / /_/ / /_/ / / /  ___/ / 
 # /_/ /_____/\____/_/ /_/_/ |_/\____/_____/\____/ /_/  /____/  
-# ______________________________________________________________;l                                                             
+# ______________________________________________________________
+
 
 
 # ---  IMPORTS  ---  ---  ---  ---
@@ -44,14 +34,14 @@ import io
 import threading
 import json
 from time import sleep
-
 # user module
 import graphics as grph
 from initialization import *
-
 # lego modules
 from ev3dev2.motor import *
 from ev3dev2.sensor.lego import *
+
+print("# Done importing")
 # ---  ---   ---  ---  ---  ---
 
 
@@ -60,9 +50,21 @@ from ev3dev2.sensor.lego import *
 # --- CONSTANTS / CONFIG
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
+
 # --- VARIABLES
 MACHINE_STATE = 'STATE_INIT'
 MACHINE_STATE_OLD = 'STATE_INIT'
+
+
+
+# --- PERIHPERALS
+PERIPH = {
+    "wheels" : None,
+    "claw" : None,
+    "gyro" : None,
+    "color" : None,
+    "sonar" : None
+}
 
 # --- ERRor flags
 ERR ={
@@ -75,6 +77,7 @@ ERR ={
 # ---  ---  ---  ---  ---  ---
 
 
+
 # ---  FUNCTION DEFINITION  ---
 def main():
     """
@@ -82,8 +85,7 @@ def main():
     """
     print("\nProgram starting ...\n")
 
-    ERR = init_ports()
-    
+    ERR,PERIPH = init_ports()
     if (ERR["port_wheels"]):
         print("\n[?] Setup ports for wheeldrive now ?")
         userinput = input(" |  (Y: proceed / N: cancel)\n").upper()
@@ -98,18 +100,30 @@ def main():
             return
 
 
-    try:
-        while (True):
-            pass
-            # event = eventlisten_statemachine()
-            # eventlisten_flags()
+    T_temp = threading.Thread(target=grph.loading_animation, args=('Calibrating gyro, do not move', 120 ,3600))
+    T_temp.start()
+    PERIPH["wheels"].gyro.calibrate()
 
-            # if (event == 'None'):
-            #     pass
-    except KeyboardInterrupt:
-        print("User terminated main().")
-        print("Exiting ...")
-        pass
+    grph.loading_flag = False
+
+    T_temp.join()
+    T_temp = threading.Thread(target=grph.loading_animation, args=('Calibrating color sensor, do not move', 120 ,3600))
+    T_temp.start()
+    PERIPH["color"].calibrate_white()
+    grph.loading_flag = False
+
+    T_temp.join()
+    #     while (True):
+    #         pass
+    #         # event = eventlisten_statemachine()
+    #         # eventlisten_flags()
+
+    #         # if (event == 'None'):
+    #         #     pass
+    # except KeyboardInterrupt:
+    #     print("User terminated main().")
+    #     print("Exiting ...")
+    #     pass
     return
 
 
@@ -122,13 +136,11 @@ def main():
 init()
 grph.CLEAR_CONSOLE()
 grph.TECHNOBOTS_LOGO()
-print("\u2593")
-print("▓")
-
-
 
 main()
 
-grph.ROBOT()
+grph.CLEAR_CONSOLE()
+grph.TECHNOBOTS_LOGO('left slant')
+# grph.ROBOT()
 
 # ---  ---  ---  ---  ---
