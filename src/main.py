@@ -4,15 +4,12 @@ A
 B
 N
 '''
-
 USER_DEBUG = True
 
 def DEBUG(userinput):
     if (USER_DEBUG):
         print("\n\t> " + userinput)
     return
-
-
 
 #!/usr/bin/env python3
 # ---  ---  ---  ---  ---  --- ---  ---  ---
@@ -38,12 +35,12 @@ def DEBUG(userinput):
 #   / / / __/ / /   / /_/ /  |/ / / / / __  / / / / / /  \__ \ 
 #  / / / /___/ /___/ __  / /|  / /_/ / /_/ / /_/ / / /  ___/ / 
 # /_/ /_____/\____/_/ /_/_/ |_/\____/_____/\____/ /_/  /____/  
-# ______________________________________________________________
-                                                             
+# ______________________________________________________________;l                                                             
 
 
 # ---  IMPORTS  ---  ---  ---  ---
 # built in modules
+import io
 import threading
 import json
 from time import sleep
@@ -61,6 +58,7 @@ from ev3dev2.sensor.lego import *
 
 # ---  DECLARATIONS  ---
 # --- CONSTANTS / CONFIG
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # --- VARIABLES
 MACHINE_STATE = 'STATE_INIT'
@@ -100,17 +98,18 @@ def main():
             return
 
 
-    # try:
-    #     while (True):
-    #         pass
-    #         # event = eventlisten_statemachine()
-    #         # eventlisten_flags()
+    try:
+        while (True):
+            pass
+            # event = eventlisten_statemachine()
+            # eventlisten_flags()
 
-    #         # if (event == 'None'):
-    #         #     pass
-    # except:
-    #     print("error")
-    #     pass
+            # if (event == 'None'):
+            #     pass
+    except KeyboardInterrupt:
+        print("User terminated main().")
+        print("Exiting ...")
+        pass
     return
 
 
@@ -123,9 +122,13 @@ def main():
 init()
 grph.CLEAR_CONSOLE()
 grph.TECHNOBOTS_LOGO()
+print("\u2593")
+print("▓")
+
+
 
 main()
 
-grph.CLEAR_CONSOLE(15)
-grph.TECHNOBOTS_LOGO('left slant')
+grph.ROBOT()
+
 # ---  ---  ---  ---  ---
