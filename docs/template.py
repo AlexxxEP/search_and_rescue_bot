@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # ---  ---  ---  ---  ---
 # file name:         % name of file + extension %
 # description :
@@ -13,8 +14,7 @@
 #                    * % long comment 3 %
 #                      % long comment 3 %
 # ---  ---   ---  ---  ---  ---
-#!/usr/bin/env python3
-# ---  ---  ---  ---  ---  ---
+
 
 
 
@@ -29,14 +29,6 @@
 # list constants declarations here
     # --- VARIABLES
 # list variable declarations here
-    # --- FUNCTIONS
-# instaciate functions here
-# ---  ---  ---  ---  ---  ---
-
-
-
-# ---  CODE START  ---
-# write main code here
 # ---  ---  ---  ---  ---  ---
 
 
@@ -44,3 +36,9 @@
 # ---  FUNCTION DEFINITION  ---
 # write function definitions here
 # ---  ---  ---  ---  ---  ---  ---
+
+
+
+# ---  CODE START  ---
+# write main code here
+# ---  ---  ---  ---  ---  ---
