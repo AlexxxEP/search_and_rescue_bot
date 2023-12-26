@@ -210,64 +210,71 @@ def loading_animation(arg='',length=8, timeout=500):
 	counter = 0
 	global loading_flag
 	loading_flag=True
-	
+	brk_request = False
+
 	bar = []
 	for k in range(length):
 		bar.append('-')
+	donebar =''
+	for k in range(length):
+		donebar += " "
+	errorbar =''
+	for k in range(length):
+		errorbar += "="
 
 	while True:
 		counter += 1*length
 		if (counter > timeout):
+			print("||\033[0;0;41m"+errorbar+"\033[0;0;0m||Error.")
 			print("\n\t>>> TIMED OUT")
 			return
 
 		for k in range(0,length):
 			string=''
-			bar[k] = '\033[1;30;46m \033[1;37;40m'
+			bar[k] = '\033[1;30;46m \033[0;0;0m'
 			for j in range(0,length):
 				string += bar[j]
-			# CLEAR_CONSOLE(5)
-			# print(arg)
+			CLEAR_CONSOLE(5)
 			print("||"+string+"\033[0;0;0m||"+arg)
 			sleep(0.01)
-			if loading_flag!=True:
-				return
+			if (loading_flag!=True): brk_request= True
+		if brk_request: break
 
 		for k in range(0,length):
 			string=''
-			bar[k] = '\033[1;37;40m-\033[1;37;40m'
+			bar[k] = '\033[1;37;40m-\033[0;0;0m'
 			for j in range(0,length):
 				string += bar[j]
-			# CLEAR_CONSOLE(5)
-			# print(arg)
+			CLEAR_CONSOLE(5)
 			print("||"+string+"\033[0;0;0m||"+arg)
 			sleep(0.01)
-			if loading_flag!=True:
-				return
+			if (loading_flag!=True): brk_request= True
+		if brk_request: break
 
 		for k in range(0,length):
 			string=''
-			bar[k] = '\033[1;30;46m \033[1;37;40m'
+			bar[k] = '\033[1;30;46m \033[0;0;0m'
 			for j in range(0,length):
 				string += bar[length-j-1]
-			# CLEAR_CONSOLE(5)
-			# print(arg)
+			CLEAR_CONSOLE(5)
 			print("||"+string+"\033[0;0;0m||"+arg)
 			sleep(0.01)
-			if loading_flag!=True:
-				return
+			if (loading_flag!=True): brk_request= True
+		if brk_request: break
 
 		for k in range(0,length):
 			string=''
-			bar[k] = '\033[1;37;40m-\033[1;37;40m'
+			bar[k] = '\033[0;0;0m-\033[0;0;0m'
 			for j in range(0,length):
 				string += bar[length-j-1]
-			# CLEAR_CONSOLE(5)
-			# print(arg)
+			CLEAR_CONSOLE(5)
 			print("||"+string+"\033[0;0;0m||"+arg)
 			sleep(0.01)
-			if loading_flag!=True:
-				return
+			if (loading_flag!=True): brk_request= True
+		if brk_request: break
+
+	CLEAR_CONSOLE(5)	
+	print("||\033[0;0;42m"+donebar+"\033[0;0;0m||Done.")
 	return
 
 def TECHNOBOTS_LOGO(style='slant'):
@@ -369,6 +376,52 @@ def ROBOT(lw_status='n' , rw_status='n', clw_status='n'):
 	# 	sleep(0.3)
 	# return
 
+def blinker(wheels, claw):
+	global activate
+	global end
+	global stopack
+
+	old_pos_left=wheels.left_motor.position
+	old_pos_right=wheels.right_motor.position
+
+	phase = 100
+	while end != True:
+		if activate !=True:
+			stopack = True
+			phase=20
+			continue
+		stopack = False
+
+		if phase == 100:
+			phase = 0
+			pos_left=wheels.left_motor.position
+			pos_right=wheels.right_motor.position
+	
+			if (old_pos_left-pos_left <0):
+				lw_status = 'd'
+			elif (old_pos_left-pos_left >0):
+				lw_status = 'r'
+			else:
+				lw_status = 'n'
+	
+			if (old_pos_right-pos_right <0):
+				rw_status = 'd'
+			elif (old_pos_right-pos_right >0):
+				rw_status = 'r'
+			else:
+				rw_status = 'n'
+	
+			old_pos_left=pos_left
+			old_pos_right=pos_right
+
+			clw_status = 'n'
+
+			CLEAR_CONSOLE(10)
+			ROBOT(lw_status, rw_status, clw_status)
+		phase +=1
+		# CLEAR_CONSOLE(10)
+
+	return
 # ---  ---  ---  ---  ---  ---  ---
 
 

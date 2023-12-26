@@ -87,12 +87,11 @@ ERR ={
 
 # ---  FUNCTION DEFINITION  ---
 def main():
-    """
-    Execute this function to start the program.
-    """
+
     print("\nProgram starting ...\n")
 
     ERR,PERIPH = init_ports()
+
     if (ERR["port_wheels"]):
         print("\n[?] Setup ports for wheeldrive now ?")
         userinput = input(" |  (Y: proceed / N: cancel)\n").upper()
@@ -107,19 +106,109 @@ def main():
             return
 
 
-    T_temp = threading.Thread(target=grph.loading_animation, args=('Calibrating gyro, do not move', 120 ,3600))
+    T_temp = threading.Thread(
+        target=grph.loading_animation,
+        args=('Calibrating gyro, do not move', 30 ,6400))
     T_temp.start()
     PERIPH["wheels"].gyro.calibrate()
-
     grph.loading_flag = False
-
     T_temp.join()
-    T_temp = threading.Thread(target=grph.loading_animation, args=('Calibrating color sensor, do not move', 120 ,3600))
+
+
+    T_temp = threading.Thread(
+        target=grph.loading_animation,
+        args=('Calibrating color sensor, do not move', 30 ,3600))
     T_temp.start()
     PERIPH["color"].calibrate_white()
     grph.loading_flag = False
-
     T_temp.join()
+
+    grph.CLEAR_CONSOLE()
+    grph.TECHNOBOTS_LOGO()
+
+
+    menu.help()
+    # ----------------------------------- USER INTERACTION STARTS --------------------------------
+    while True:
+        user_cmd = input()
+        print("\n")
+
+
+        if (user_cmd.lower() == 'start'):
+            menu.action = 'None'
+            menu.action_ack = False
+            grph.activate = False
+            grph.end = False
+            grph.stopack = False
+
+            T0 = threading.Thread(target = menu.start)
+            T0.start()
+            T1 = threading.Thread(target = grph.blinker, args = (PERIPH["wheels"],PERIPH["claw"]))
+            T1.start()
+
+            while (menu.action == 'None'):
+                continue
+            if (menu.action=='run to line'):
+                grph.activate = True
+                PERIPH["wheels"].on(8,8)
+            while (PERIPH["color"].color != 1):
+                continue
+            PERIPH["wheels"].on(3,3)
+            while (PERIPH["color"].color == 1):
+                continue
+            PERIPH["wheels"].on(0,0)
+            grph.activate = False
+            while(grph.stopack != True):
+                continue
+
+            menu.action_ack = True
+            grph.end = True
+
+            T0.join()
+            T1.join()
+            print("all processes done")
+
+        elif (user_cmd.lower() == 'calibrate'):
+            T_temp = threading.Thread(
+                target=grph.loading_animation,
+                args=('Calibrating gyro, do not move', 30 ,6400))
+            T_temp.start()
+            PERIPH["wheels"].gyro.calibrate()
+            grph.loading_flag = False
+            T_temp.join()
+
+            T_temp = threading.Thread(
+                target=grph.loading_animation,
+                args=('Calibrating color sensor, do not move', 30 ,3600))
+            T_temp.start()
+            PERIPH["color"].calibrate_white()
+            grph.loading_flag = False
+            T_temp.join()
+            continue
+        elif (user_cmd.lower() == 'config'):
+            print('not yet implemented')
+            continue
+        elif (user_cmd.lower() == 'spin'):
+            PERIPH["wheels"].on(-8,8)
+            continue
+        elif (user_cmd.lower() == 'stop'):
+            PERIPH["wheels"].on(0,0)
+            continue
+        elif (user_cmd.lower() == 'help'):
+            menu.help()
+            continue
+        elif (user_cmd.lower() == 'exit'):
+            return
+
+        elif (user_cmd.lower() == ''):
+            continue
+        else:
+            print("Invalid argument.")
+            print("\n\t>>> '{}' is not recognized as a command.\n".format(user_cmd.lower()))
+
+
+
+
     #     while (True):
     #         pass
     #         # event = eventlisten_statemachine()
@@ -134,19 +223,15 @@ def main():
     return
 
 
-
 # ---  ---  ---  ---  ---  ---  ---
 
 
 
 # ---  CODE START  ---  ---
 init()
-grph.CLEAR_CONSOLE()
-grph.TECHNOBOTS_LOGO()
-
 main()
 
-grph.CLEAR_CONSOLE()
+# grph.CLEAR_CONSOLE()
 grph.TECHNOBOTS_LOGO('left slant')
 # grph.ROBOT()
 
