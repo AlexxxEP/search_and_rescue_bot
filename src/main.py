@@ -30,14 +30,21 @@
 
 # ---  IMPORTS  ---  ---  ---  ---
 # built in modules
+print("# importing io")
 import io
+print("# importing threading")
 import threading
+print("# importing json")
 import json
+print("# importing sleep from time")
 from time import sleep
+
 # user module
 import graphics as grph
+import menu
 from initialization import *
-# lego modules
+
+# ev3dev2 modules
 from ev3dev2.motor import *
 from ev3dev2.sensor.lego import *
 
