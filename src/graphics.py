@@ -19,6 +19,7 @@ print("# importing {}".format(__name__))
 # ---  IMPORTS  ---  ---  ---  ---
 # ---  ---   ---  ---  ---  ---
 from time import sleep
+import json
 # import threading
 
 # ---  DECLARATIONS  ---
@@ -28,6 +29,28 @@ from time import sleep
 loading_flag = True
 
 # --- GRAPHIC RESSOURCES 
+ansicolor={
+	"style" : {
+		'reset'	:	'0',
+		'italic':	'1'
+	},
+	"textcolor" : {
+		'reset'	:	'0',
+		'black'	:   '30',
+		'green':   '32',
+		'blue'	:	'34',
+		'cyan'	:	'36'
+	},
+	"bgcolor" : {
+		'reset'	:	'0',
+		'red'	:	'42',
+		'blue'	:	'44',
+		'cyan'	:	'46',
+		'yellow':	'48'
+	}
+}
+
+
 d_lw=[
 	# --- line 1
 	{
@@ -205,6 +228,36 @@ def CLEAR_CONSOLE(n=50):
 	for k in range(n):
 		print("\n")
 	return
+
+
+def echo(text, text_color='reset', bg_color='reset', text_style='reset'):
+	"""
+	"""
+	# global ansicolor
+	end="`\033[0;0;0m"
+	styling = "\033["
+
+	try:
+		styling += ansicolor["style"][text_style]
+	except:
+		styling += ansicolor["style"]['reset']
+	styling += ';'
+	try:
+		styling += ansicolor["textcolor"][text_color]
+	except:
+		styling += ansicolor["textcolor"]['reset']
+	styling += ';'
+	try:
+		styling += ansicolor["bgcolor"][bg_color]
+	except:
+		styling += ansicolor["bgcolor"]['reset']
+	styling += 'm'
+
+	print(styling+text+end)
+	return
+
+echo("zizi",'green','red')
+
 
 def loading_animation(arg='',length=8, timeout=500):
 	counter = 0
