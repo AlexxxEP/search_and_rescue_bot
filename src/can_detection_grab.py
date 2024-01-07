@@ -24,13 +24,7 @@ def open_claw():
 def close_claw():
     #claw_motor_left.on_for_seconds(speed=-50, seconds=1)
     claw_motor_right.on_for_seconds(speed=50, seconds=1)
-def claw_movement(distance, x):
-    if 70<distance<80 and 100<x<200:
-    # claw movement
-        close_claw()
-        sleep(2)
-        open_claw()
-        sleep(2)
+
 
 # set port and i2c address
 pixy2 = Pixy2(port=4, i2c_address=0x54)
@@ -63,6 +57,11 @@ if nr_blocks >= 1:
     print('The y-axis of the block is: ', y)
     print('The width of the block is: ', w)
     print('The height of the block is: ', h)
-    claw_movement(distance, x)
+    if 70<distance<80 and 100<x<200:
+    # claw movement
+        close_claw()
+        sleep(2)
+        open_claw()
+        sleep(2)
     
 
