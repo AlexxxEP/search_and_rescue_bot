@@ -53,6 +53,7 @@ if nr_blocks >= 1:
     y = blocks[0].y_center
     w = blocks[0].width
     h = blocks[0].height
+    sleep(10)
     try:
         while True:
             print('The x-axis of the block is: ', x)
