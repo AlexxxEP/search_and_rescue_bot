@@ -1,0 +1,29 @@
+{
+  "port":{
+
+    "claw"        : "B",
+    "lwheel"      : "D",
+    "rwheel"      : "A"
+  },
+
+  "physical":{
+
+    "wheeldiameter"   : "55",
+    "trackdist"       : "120"
+  },
+
+  "target":{
+
+    "diameter"    : "60",
+    "color"       : "red"
+  },
+
+  "environment":{
+
+    "width"       : "1500",
+    "length"      : "1500",  
+    "floorcolor"  : "white",      
+    "edgecolor"   : "black"   
+
+  }
+}
