@@ -40,7 +40,7 @@ def open_claw():
 def close_claw():
     #claw_motor_left.on_for_seconds(speed=-50, seconds=1)
     claw_motor_right.on_for_seconds(speed=50, seconds=1)
-def claw_movement(distance, x, y)
+def claw_movement(distance, x, y):
     if 70<distance<80 and 155<x<165 and 70<y<80:
     # claw movement
         open_claw()
