@@ -3,23 +3,7 @@ from ev3dev2.sensor.lego import UltrasonicSensor
 from ev3dev2.motor import MediumMotor, OUTPUT_A
 from time import sleep
 
-# set port and i2c address
-pixy2 = Pixy2(port=4, i2c_address=0x54)
 
-# get version
-version = pixy2.get_version()
-print('Hardware: ', version.hardware)
-print('Firmware: ', version.firmware)
-
-# get frame resolution
-resolution = pixy2.get_resolution()
-print('Frame width: ', resolution.width)
-print('Frame height: ', resolution.height)
-
-# Turn upper leds on for 2s, then turn off
-pixy2.set_lamp(1, 0)
-sleep(2)
-pixy2.set_lamp(0, 0)
 
 # Setup
 us = UltrasonicSensor()
@@ -40,14 +24,32 @@ def open_claw():
 def close_claw():
     #claw_motor_left.on_for_seconds(speed=-50, seconds=1)
     claw_motor_right.on_for_seconds(speed=50, seconds=1)
-def claw_movement(distance, x, y):
+def claw_movement(distance, x):
     if 70<distance<80 and 100<x<200:
     # claw movement
-        open_claw()
-        sleep(2)
         close_claw()
         sleep(2)
-        
+        open_claw()
+        sleep(2)
+
+# set port and i2c address
+pixy2 = Pixy2(port=4, i2c_address=0x54)
+
+# get version
+version = pixy2.get_version()
+print('Hardware: ', version.hardware)
+print('Firmware: ', version.firmware)
+
+# get frame resolution
+resolution = pixy2.get_resolution()
+print('Frame width: ', resolution.width)
+print('Frame height: ', resolution.height)
+
+# Turn upper leds on for 2s, then turn off
+pixy2.set_lamp(1, 0)
+sleep(2)
+pixy2.set_lamp(0, 0)
+
 # Track blocks with signature 1, request just 1 block wile true:
 nr_blocks, blocks = pixy2.get_blocks(1, 1)
 
@@ -61,6 +63,6 @@ if nr_blocks >= 1:
     print('The y-axis of the block is: ', y)
     print('The width of the block is: ', w)
     print('The height of the block is: ', h)
-    claw_movement(distance, x, y)
+    claw_movement(distance, x)
     
 
