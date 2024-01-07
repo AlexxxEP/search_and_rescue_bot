@@ -57,6 +57,7 @@ if nr_blocks >= 1:
     print('The y-axis of the block is: ', y)
     print('The width of the block is: ', w)
     print('The height of the block is: ', h)
+    print('The distance of the block is: ', distance)
     if 70<distance<80 and 100<x<200:
     # claw movement
         close_claw()
