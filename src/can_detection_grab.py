@@ -1,5 +1,6 @@
 from pixycamev3.pixy2 import Pixy2
 from ev3dev2.sensor.lego import UltrasonicSensor
+from ev3dev2.motor import MediumMotor, OUTPUT_A, OUTPUT_B
 from time import sleep
 
 # set port and i2c address
@@ -20,9 +21,36 @@ pixy2.set_lamp(1, 0)
 sleep(2)
 pixy2.set_lamp(0, 0)
 
+# Setup
+us = UltrasonicSensor()
+
+# Use
+us.mode='US-DIST-CM'
+distance = us.value()
+# distance should be between 70 and 80
+
+# Initialize the motors connected to the claw
+claw_motor_right = MediumMotor(OUTPUT_B)
+
+# Define functions to control the claw movement
+def open_claw():
+    #claw_motor_left.on_for_seconds(speed=50, seconds=1)
+    claw_motor_right.on_for_seconds(speed=-50, seconds=1)
+
+def close_claw():
+    #claw_motor_left.on_for_seconds(speed=-50, seconds=1)
+    claw_motor_right.on_for_seconds(speed=50, seconds=1)
+def claw_movement(distance, x y)
+    if 70<distance<80 and 155<x<165 and 70<y<80:
+    # claw movement
+        open_claw()
+        sleep(2)
+        close_claw()
+        sleep(2)
+        
 # Track blocks with signature 1, request just 1 block wile true:
 nr_blocks, blocks = pixy2.get_blocks(1, 1)
-# extrack data of first (and only) block
+
 if nr_blocks >= 1:
     sig = blocks[0].sig
     x = blocks[0].x_center
@@ -33,16 +61,6 @@ if nr_blocks >= 1:
     print('The y-axis of the block is: ', y)
     print('The width of the block is: ', w)
     print('The height of the block is: ', h)
+    claw_movement(distance, x, y)
+    
 
-
-# x should be between 155 and 165
-# y should be bwtween 70 and 80
-
-# Setup
-us = UltrasonicSensor()
-
-# Use
-us.mode='US-DIST-CM'
-distance = us.value()
-
-print(distance)
