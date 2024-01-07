@@ -1,6 +1,6 @@
-from pixycamev3.pixy2 import Pixy2
+from pixycamev3.pixy2 import *
 from ev3dev2.sensor.lego import UltrasonicSensor
-from ev3dev2.motor import MediumMotor, OUTPUT_A, OUTPUT_B
+from ev3dev2.motor import MediumMotor, OUTPUT_B
 from time import sleep
 
 # set port and i2c address
