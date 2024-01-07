@@ -16,6 +16,7 @@
 
 
 from pixycamev3.pixy2 import Pixy2
+from time import sleep
 
 # set port and i2c address
 pixy2 = Pixy2(port=4, i2c_address=0x54)
