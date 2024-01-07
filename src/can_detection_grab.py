@@ -50,11 +50,6 @@ nr_blocks, blocks = pixy2.get_blocks(1, 1)
 print('The number of the block is: ', nr_blocks)
 
 if nr_blocks >= 1:
-    sig = blocks[0].sig
-    x = blocks[0].x_center
-    y = blocks[0].y_center
-    w = blocks[0].width
-    h = blocks[0].height
     sleep(10)
     try:
         while 1:
