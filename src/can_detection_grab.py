@@ -68,3 +68,4 @@ if nr_blocks >= 1:
         #claw_motor_left.off()
         claw_motor_right.off()
 
+pixy2.set_lamp(0, 0)
