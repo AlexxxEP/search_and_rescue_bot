@@ -1,7 +1,7 @@
 from pixycamev3.pixy2 import Pixy2
 
 # set port and i2c address
-pixy2 = Pixy2(port=1, i2c_address=0x54)
+pixy2 = Pixy2(port=4, i2c_address=0x54)
 
 # get version
 version = pixy2.get_version()
