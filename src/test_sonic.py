@@ -5,7 +5,7 @@ from time import sleep
 
 
 SERVER_IP = '172.20.10.2'
-SERVER_PORT = 22
+SERVER_PORT = 12345
 
 us = UltrasonicSensor()
 us.mode = 'US-DIST-CM'
