@@ -55,6 +55,8 @@ if nr_blocks >= 1:
     sleep(10)
     try:
         while True:
+            x = blocks[0].x_center
+            distance = us.value()
             print('The x-axis of the block is: ', x)
             print('The distance of the block is: ', distance)
             if 70<distance<80 and 100<x<200:
