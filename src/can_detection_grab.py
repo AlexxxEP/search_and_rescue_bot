@@ -40,7 +40,6 @@ if nr_blocks >= 1:
 
 # Setup
 us = UltrasonicSensor()
-assert us.connected, "Connect an EV3 ultrasonic sensor to any sensor port"
 
 # Use
 us.mode='US-DIST-CM'
