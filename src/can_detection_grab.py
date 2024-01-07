@@ -65,6 +65,7 @@ if nr_blocks >= 1:
                 sleep(2)
                 open_claw()
                 sleep(2)
+                break
     except KeyboardInterrupt:
         # Stop motors and exit cleanly on Ctrl+C
         #claw_motor_left.off()
