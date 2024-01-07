@@ -1,6 +1,6 @@
 from pixycamev3.pixy2 import *
 from ev3dev2.sensor.lego import UltrasonicSensor
-from ev3dev2.motor import MediumMotor, OUTPUT_B
+from ev3dev2.motor import MediumMotor, OUTPUT_A
 from time import sleep
 
 # set port and i2c address
@@ -30,7 +30,7 @@ distance = us.value()
 # distance should be between 70 and 80
 
 # Initialize the motors connected to the claw
-claw_motor_right = MediumMotor(OUTPUT_B)
+claw_motor_right = MediumMotor(OUTPUT_A)
 
 # Define functions to control the claw movement
 def open_claw():
