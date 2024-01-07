@@ -53,13 +53,10 @@ if nr_blocks >= 1:
     y = blocks[0].y_center
     w = blocks[0].width
     h = blocks[0].height
-    print('The x-axis of the block is: ', x)
-    print('The y-axis of the block is: ', y)
-    print('The width of the block is: ', w)
-    print('The height of the block is: ', h)
-    print('The distance of the block is: ', distance)
     try:
         while True:
+            print('The x-axis of the block is: ', x)
+            print('The distance of the block is: ', distance)
             if 70<distance<80 and 100<x<200:
             # claw movement
                 close_claw()
