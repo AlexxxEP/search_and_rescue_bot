@@ -54,7 +54,7 @@ if nr_blocks >= 1:
     h = blocks[0].height
     sleep(10)
     try:
-        while True:
+        while 1:
             x = blocks[0].x_center
             distance = us.value()
             print('The x-axis of the block is: ', x)
