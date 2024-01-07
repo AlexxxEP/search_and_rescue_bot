@@ -18,12 +18,12 @@ claw_motor_right = MediumMotor(OUTPUT_A)
 
 # Define functions to control the claw movement
 def open_claw():
-    #claw_motor_left.on_for_seconds(speed=50, seconds=1)
-    claw_motor_right.on_for_seconds(speed=-50, seconds=1)
+    #claw_motor_left.on_for_seconds(speed=50, seconds=1.5)
+    claw_motor_right.on_for_seconds(speed=-50, seconds=1.5)
 
 def close_claw():
-    #claw_motor_left.on_for_seconds(speed=-50, seconds=1)
-    claw_motor_right.on_for_seconds(speed=50, seconds=1)
+    #claw_motor_left.on_for_seconds(speed=-50, seconds=1.5)
+    claw_motor_right.on_for_seconds(speed=50, seconds=1.5)
 
 
 # set port and i2c address
@@ -66,7 +66,7 @@ if nr_blocks >= 1:
             if 70<distance<80 and 100<x<200:
             # claw movement
                 open_claw()
-                sleep(4)
+                sleep(2)
                 close_claw()
                 sleep(2)
                 break
