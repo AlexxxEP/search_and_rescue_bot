@@ -41,8 +41,7 @@ print('Frame height: ', resolution.height)
 
 # Turn upper leds on for 2s, then turn off
 pixy2.set_lamp(1, 0)
-sleep(2)
-pixy2.set_lamp(0, 0)
+
 
 # Track blocks with signature 1, request just 1 block wile true:
 nr_blocks, blocks = pixy2.get_blocks(1, 1)
