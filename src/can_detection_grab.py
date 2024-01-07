@@ -58,6 +58,7 @@ if nr_blocks >= 1:
     sleep(10)
     try:
         while 1:
+            nr_blocks, blocks = pixy2.get_blocks(1, 1)
             x = blocks[0].x_center
             distance = us.value()
             print('The x-axis of the block is: ', x)
