@@ -46,6 +46,9 @@ pixy2.set_lamp(1, 0)
 # Track blocks with signature 1, request just 1 block wile true:
 nr_blocks, blocks = pixy2.get_blocks(1, 1)
 
+
+print('The number of the block is: ', nr_blocks)
+
 if nr_blocks >= 1:
     sig = blocks[0].sig
     x = blocks[0].x_center
