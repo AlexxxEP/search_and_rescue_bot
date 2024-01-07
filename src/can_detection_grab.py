@@ -64,9 +64,9 @@ if nr_blocks >= 1:
             print('The distance of the block is: ', distance)
             if 70<distance<80 and 100<x<200:
             # claw movement
-                close_claw()
-                sleep(2)
                 open_claw()
+                sleep(4)
+                close_claw()
                 sleep(2)
                 break
     except KeyboardInterrupt:
