@@ -16,7 +16,7 @@ distance = us.value()
 # distance should be between 70 and 80
 
 # Initialize the motors connected to the claw
-claw_motor_right = MediumMotor(OUTPUT_A)
+claw_motor_right = MediumMotor(OUTPUT_B)
 
 # Define functions to control the claw movement
 def open_claw():
