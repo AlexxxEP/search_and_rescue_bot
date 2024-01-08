@@ -29,15 +29,15 @@ def close_claw():
 
 def Straight ( speed ):
     wheels.on(speed, speed)
-    return
     
 def turn_left ( speed ):
     wheels.on(0-speed, speed)
-    return
 
 def turn_right ( speed ):
     wheels.on(speed, 0-speed)
-    return
+
+def motor_stop():
+    wheels.off()
 
 # set port and i2c address
 pixy2 = Pixy2(port=4, i2c_address=0x54)
