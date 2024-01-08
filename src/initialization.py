@@ -190,6 +190,10 @@ def init_ports():
         ERR_msg.append(e_msg)
         ERR["port_sonar"] =True
 
+    if ( ERR["port_wheels"] == False and ERR["port_gyro"] == False ):
+        PERIPH["wheels"].gyro = PERIPH["gyro"]
+
+
     if (ERR["port_wheels"] or ERR["port_claw"] or ERR["port_gyro"] or ERR["port_color"] or ERR["port_sonar"]):
         print("\nConfiguration error.")
         print("Check physical connections on robot according to current configuration.")
