@@ -1,4 +1,22 @@
+# ---  ---  ---  ---  ---
+# file name:         cam_test.py
+# description :      Try to test the camera.
+#
+#
+#
+# author:            Xiaosen CHEN
+# created on:        2024 01 07
+# last updated:      2023 01 07
+# updated by:        Xiaosen CHEN
+# comment :          
+# ---  ---   ---  ---  ---  ---
+#!/usr/bin/env python3
+# ---  ---  ---  ---  ---  ---
+
+
+
 from pixycamev3.pixy2 import Pixy2
+from time import sleep
 
 # set port and i2c address
 pixy2 = Pixy2(port=4, i2c_address=0x54)
