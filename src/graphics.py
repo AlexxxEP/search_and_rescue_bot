@@ -256,8 +256,6 @@ def echo(text, text_color='reset', bg_color='reset', text_style='reset'):
 	print(styling+text+end)
 	return
 
-echo("zizi",'green','red')
-
 
 def loading_animation(arg='',length=8, timeout=500):
 	counter = 0
