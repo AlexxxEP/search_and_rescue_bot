@@ -1,7 +1,28 @@
+#!/usr/bin/env python3
+# ---  ---  ---  ---  ---  ---
+# file name:    can_detection_grab.py
+# author:       CHEN Xiaosen
+# date:         2024 01 07
+# ---  ---  ---
+# ---  ---  ---  ---  ---
+# file name:         can_detection_grab.py
+# description :      Once the target appears in the frame of the camera, the robot will go for it and grab it.
+#
+#
+#
+# author:            CHEN Xiaosen
+# created on:        2024 01 07
+# last updated:      2024 01 08
+# updated by:        CHEN Xiaosen
+# comment :          
+# ---  ---   ---  ---  ---  ---
+
+# ---  IMPORTS  ---  ---  ---  ---
 from pixycamev3.pixy2 import *
 from ev3dev2.sensor.lego import UltrasonicSensor
 from ev3dev2.motor import *
 from time import sleep
+# ---  ---   ---  ---  ---  --
 
 
 
@@ -11,7 +32,7 @@ wheel_diameter=55.5
 wheels = MoveTank(OUTPUT_D, OUTPUT_A)
 
 # Use
-us.mode='US-DIST-CM'
+# us.mode='US-DIST-CM'
 distance = us.value()
 # distance should be between 70 and 80
 
@@ -52,7 +73,7 @@ resolution = pixy2.get_resolution()
 print('Frame width: ', resolution.width)
 print('Frame height: ', resolution.height)
 
-# Turn upper leds on for 2s, then turn off
+# Turn upper leds on
 pixy2.set_lamp(1, 0)
 sleep(2)
 
@@ -67,11 +88,15 @@ if nr_blocks >= 1:
     try:
         while 1:
             nr_blocks, blocks = pixy2.get_blocks(1, 1)
+            
+            # I set this "if" beacause the camera is not stable. Sometimes the camera loses the target even the target is in the frame.
             if nr_blocks >= 1:
                 x = blocks[0].x_center
             distance = us.value()
             print('The x-axis of the block is: ', x)
             print('The distance of the block is: ', distance)
+            
+            # The robot will first rotate to face the target， and then go grab the target.
             if 70<=distance<=80 and 100<=x<=200:
                 motor_stop()
                 # claw movement
@@ -94,4 +119,5 @@ if nr_blocks >= 1:
         #claw_motor_left.off()
         claw_motor_right.off()
 
+# Turn upper leds off
 pixy2.set_lamp(0, 0)
