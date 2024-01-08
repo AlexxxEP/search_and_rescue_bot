@@ -72,7 +72,6 @@ if nr_blocks >= 1:
             distance = us.value()
             print('The x-axis of the block is: ', x)
             print('The distance of the block is: ', distance)
-            sleep(1)
             if 70<=distance<=80 and 100<=x<=200:
                 motor_stop()
                 # claw movement
