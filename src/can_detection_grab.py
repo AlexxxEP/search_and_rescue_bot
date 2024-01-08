@@ -85,9 +85,9 @@ if nr_blocks >= 1:
             elif x > 200:
                 turn_left(10)
             elif 100<x<200 and distance < 70:
-                Straight (-10)
-            else:
                 Straight (10)
+            else:
+                Straight (-10)
 
     except KeyboardInterrupt:
         # Stop motors and exit cleanly on Ctrl+C
