@@ -8,7 +8,6 @@ from time import sleep
 # Setup
 us = UltrasonicSensor()
 wheel_diameter=55.5
-color = ColorSensor()
 wheels = MoveTank(OUTPUT_D, OUTPUT_A)
 
 # Use
