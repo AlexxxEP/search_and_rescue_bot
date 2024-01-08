@@ -73,7 +73,8 @@ if nr_blocks >= 1:
             print('The distance of the block is: ', distance)
             sleep(1)
             if 70<=distance<=80 and 100<=x<=200:
-            # claw movement
+                motor_stop()
+                # claw movement
                 open_claw()
                 sleep(2)
                 close_claw()
