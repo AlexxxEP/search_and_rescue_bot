@@ -82,6 +82,7 @@ def init(config='user'):
         print("\n\t>>> Wrong argument.")
         return 1
 
+    global SYS
     global SYS_port_lwheel      
     global SYS_port_rwheel      
     global SYS_port_claw        
@@ -147,6 +148,9 @@ def init(config='user'):
             SYS_envi_length             = cfg_def['environment']['length']
             SYS_envi_floorcolor         = cfg_def['environment']['floorcolor']
             SYS_envi_edgecolor          = cfg_def['environment']['edgecolor']
+    
+
+    
     return
     
 
@@ -170,7 +174,7 @@ def init_ports():
         ERR["port_claw"] =True
    
     try:
-        PERIPH["wheels"].gyro = GyroSensor()
+        PERIPH["gyro"] = GyroSensor()
         ERR["port_gyro"] =False
     except Exception as e_msg:
         ERR_msg.append(e_msg)
@@ -210,7 +214,7 @@ def init_checkwheels(userinput="Y"):
     """
     remediates un-initialized wheels port
     """
-
+    global ERR
     if (userinput == "N" ):
         print("\n\nExiting ...")
         return 1
@@ -218,7 +222,7 @@ def init_checkwheels(userinput="Y"):
     elif (userinput == "Y" ):
         print("\n[?] Register left motor port : ")
         user_leftmotorport = input(" |  (A/B/C/D)\n").upper()
-        print("\n[?] Register left motor port : ")
+        print("\n[?] Register right motor port : ")
         user_rightmotorport = input(" |  (A/B/C/D)\n").upper()
         try:
             wheels = MoveTank('ev3-ports:out'+user_leftmotorport,'ev3-ports:out'+user_rightmotorport)
@@ -231,6 +235,7 @@ def init_checkwheels(userinput="Y"):
             return check
         else:
             print("Assignement of ports for wheeldrive succesful.")
+            ERR["port_wheels"]=False
             return 0
         return
 
@@ -245,6 +250,7 @@ def init_checkclaw(userinput):
     """
     remediates un-initialized claw port
     """
+    global ERR
     if (userinput == "N"):
         print("\n\nExiting ...")
         return 1
@@ -275,6 +281,12 @@ def init_checkclaw(userinput):
         return check
     return
 
+def init_checksensor(userinput):
+    """
+    allows the user to reconnect the sensor of interest
+    """
+    
+    return
 
 # ---  ---  ---  ---  ---  ---  ---
 

@@ -5,9 +5,9 @@
 #
 # author:            Alexandre EANG
 # created on:        2023 12 31
-# last updated:      2023 12 31
+# last updated:      2024 01 09
 # updated by:        Alexandre EANG
-# comment :          * Created file
+# comment :          * Added compound functions
 # ---  ---   ---  ---  ---  ---
 if (__name__ != '__main__'): print("# importing {}".format(__name__))
 
@@ -24,8 +24,24 @@ from ev3dev2.sensor.lego import *
 # ---  DECLARATIONS  ---
 # --- CONSTANTS / CONFIG
 PERIPH =[]
-
 module_init = False
+
+# Constants for the robot's movements
+wheel_diameter = 5.6 # Diameter of the wheels in centimeters
+wheel_circumference = wheel_diameter * m.pi # Circumference = π * diameter
+wheel_distance = 12.5 # Distance between the wheels in centimeters
+
+wheel_trackdist = 15
+wheel_trackcircumference = wheel_trackdist * m.pi
+wheel_dist_to_travel = wheel_trackcircumference / 4
+radian_to_travel = 2 * m.pi * wheel_dist_to_travel / wheel_circumference
+degrees_to_travel = m.degrees(radian_to_travel)
+
+# Calculate the number of rotations needed for the robot to move forward by 1.5 meters
+# Distance traveled = Number of rotations * Wheel circumference
+distance_to_travel = 150 # 1.5 meters = 150 centimeters
+rotations_needed = distance_to_travel / wheel_circumference
+
 # ---  ---  ---  ---  ---  ---
 
 
@@ -35,12 +51,13 @@ module_init = False
 #	--- INITIALIZATION FUNCTION
 def init(*args):
 	"""
-	init of movement submodules
+	init of movement submodule
 	"""
 	global PERIPH
+	global module_init
+
 	try:
-		PERIPH = args[0]
-		print(PERIPH)
+		PERIPH != []
 		module_init = True
 	except:
 		print("\n\t>>> Failed to call PERIPH from {}".format(__name__))
@@ -62,8 +79,9 @@ def straight(speed=15, use_gyro=False):
 		print("\n\t>>> Error : wheelset has not been instanciated to {}".format(__name__))
 		return 1
 
-	global PERIPH
-
+	# global PERIPH
+	print(PERIPH)
+	PERIPH["wheels"].on(speed, speed)
 
 	return
 
@@ -74,14 +92,72 @@ def stop():
 		print("\n\t>>> Error : wheelset has not been instanciated to {}".format(__name__))
 		return 1
 
+	
+
+
 	global PERIPH
 
+	PERIPH["wheels"].on(0,0)
 	
 
 	return
 
 
 #	--- COMPOUND FUNCTIONS
+
+
+
+# Function to make the robot move forward by a given number of rotations
+def move_forward():
+	global PERIPH
+	PERIPH["wheels"].left_motor.on_for_rotations(speed=20, rotations=rotations_needed)
+	PERIPH["wheels"].right_motor.on_for_rotations(speed=20, rotations=rotations_needed)
+
+# # Function to make the robot turn 90 degrees to the left
+# def turn_left():
+# 	global PERIPH
+# 	PERIPH["wheels"].left_motor.on_for_rotations(speed=-20, rotations=rotations_needed / 4)
+# 	PERIPH["wheels"].right_motor.on_for_rotations(speed=20, rotations=rotations_needed / 4)
+
+# # Function to make the robot turn 90 degrees to the right
+# def turn_right():
+# 	global PERIPH
+# 	PERIPH["wheels"].left_motor.on_for_rotations(speed=20, rotations=rotations_needed / 4)
+# 	PERIPH["wheels"].right_motor.on_for_rotations(speed=-20, rotations=rotations_needed / 4)
+
+# Function to make the robot turn 90 degrees to the left
+def turn_left():
+	global PERIPH
+	PERIPH["wheels"].on_for_degrees(left_speed=20,right_speed=-20,  degrees=degrees_to_travel)
+# Function to make the robot turn 90 degrees to the right
+def turn_right():
+	global PERIPH
+	PERIPH["wheels"].on_for_degrees(left_speed=-20,right_speed=20, degrees=degrees_to_travel)
+
+
+# def retracting_circle():
+# 	try:
+# 		global PERIPH
+# 		# Explore the 1.5x1.5 meters square area using a retracting square pattern
+# 		for _ in range(4): # Repeat the square pattern four times to cover the area
+# 			move_forward()
+# 			turn_left()
+# 			move_forward()
+# 			turn_right()
+
+# 	except KeyboardInterrupt:
+# 		global PERIPH
+# 		# Stop motors and exit cleanly on Ctrl+C
+# 		PERIPH["wheels"].left_motor.off()
+# 		PERIPH["wheels"].right_motor.off()
+
+
+# return
+
+
+def retracting_circle():
+	turn_right()
+	return
 
 
 # ---  ---  ---  ---  ---  ---  ---

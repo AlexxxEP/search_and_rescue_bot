@@ -63,9 +63,13 @@ def start():
 	print(" |                                   ")
 	print(" |  To abort, do CMD+C.")
 	try:
-		input()
+		user_input = input()
 	except KeyboardInterrupt:
 		return
+
+	if (user_input == '1'):
+		action = 'snake pattern'
+
 	return
 
 
