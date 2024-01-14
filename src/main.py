@@ -44,6 +44,7 @@ import graphics as grph
 import menu
 from initialization import *
 import movement as mv
+import sensors as sns
 
 # ev3dev2 modules
 from ev3dev2.motor import *
@@ -88,6 +89,10 @@ ERR ={
     "port_color" : False,
     "port_sonar" : False
 }
+
+# --- VARIABLES
+MACHINE_STATE = 'STATE_INIT'
+MACHINE_STATE_OLD = 'STATE_INIT'
 # ---  ---  ---  ---  ---  ---
 
 
@@ -150,34 +155,34 @@ def main():
     grph.TECHNOBOTS_LOGO()
 
     menu.help()
-    # ----------------------------------- USER INTERACTION STARTS --------------------------------
+    # ============    USER INTERACTION STARTS    ====================
     while True:
         user_cmd = input()
         print("\n")
 
 
-        # START MENU SUB-ROUTINE
+        # START MENU SUB-ROUTINE    ====    ====    ====    ====    
         if (user_cmd.lower() == 'start'):
 
+            # ----    START
+            # variables init
             menu.action = 'None'
             menu.action_ack = False
             grph.activate = False
             grph.end = False
-            grph.stopack = False
-
+            grph.stopack = False    # read only
+            
+            # threads
             T_menu = threading.Thread(target = menu.start)
             T_menu.start()
-            T_graphic = threading.Thread(
-                target = grph.blinker,
-                args = (PERIPH["wheels"],PERIPH["claw"])
-                )
+            T_graphic = threading.Thread(target = grph.blinker)
             T_graphic.start()
 
+            # runto line
             while (menu.action == 'None'):
                 continue
-            if (menu.action=='run to line'):
-                grph.activate = True
-                mv.straight(8)
+            grph.activate = True
+            mv.straight(8)
             while (PERIPH["color"].color != 1):
                 continue
             mv.straight(3)
@@ -188,19 +193,188 @@ def main():
             while(grph.stopack != True):
                 continue
 
-            menu.action_ack = True
             grph.end = True
-
-            T_menu.join()
+            menu.action_ack = True
             T_graphic.join()
+            T_menu.join()
+            while (menu.action == 'run to line'):
+                continue
 
-            mv.retracting_circle()
+            # ----    PATTERN
+            # var init
+            grph.activate = False
+            grph.end = False
+            grph.stopack = False    # read only
+            mv.order = ''
+            mv.order_ack = False
+            mv.stop_pattern = True
+            mv.pattern_done = False
+            mv.end = False
 
-            print("all processes done")
+            mv.pos_x = 0
+            mv.pos_y = 0
+            mv.targ_x = -1
+            mv.targ_y = -1
+
+
+            if (menu.action == 'lawnmower'):
+                mv.A_dist = 0
+                mv.B_dist = 0
+
+                grph.end = False
+                grph.activate = False
+                grph.stopack = False #read only
+
+                PERIPH["gyro"].reset()
+                T_pattern = threading.Thread( target = mv.lawnmower)
+                T_graphic = threading.Thread(target = grph.blinker)
+                T_pattern.start()
+                T_graphic.start()
+
+                mv.stop_pattern = False
+                grph.activate = True
+
+                # evaluate boundaries
+                mv.order='straight'
+                mv.A_dist -= PERIPH["wheels"].left_motor.position
+                while (PERIPH["color"].color != 1):
+                    continue
+                mv.A_dist += PERIPH["wheels"].left_motor.position
+                mv.order='u-turn right'
+                while mv.order_ack != True:
+                    continue
+
+                # start loops
+                while mv.stop_pattern != True:
+                    mv.B_dist = PERIPH["wheels"].left_motor.position
+                    mv.order='straight'
+                    while (PERIPH["color"].color != 1):
+                        if PERIPH["wheels"].left_motor.position > mv.B_dist+mv.A_dist + mv.hairpin_tol:
+                            mv.stop_pattern = True
+                            break
+                    if mv.stop_pattern == True:
+                        break                    
+                    mv.order='u-turn left'
+                    while mv.order_ack != True:
+                        continue
+
+                    mv.B_dist = PERIPH["wheels"].left_motor.position
+                    mv.order='straight'
+                    while (PERIPH["color"].color != 1):
+                        if PERIPH["wheels"].left_motor.position > mv.B_dist+mv.A_dist + mv.hairpin_tol:
+                            mv.stop_pattern = True
+                            break
+                    if mv.stop_pattern == True:
+                            break
+                    mv.order='u-turn right'
+                    while mv.order_ack != True:
+                        continue
+
+
+
+                mv.stop_pattern = True
+                mv.end = True
+                grph.end = True
+                T_pattern.join()                # T_graphic.join()
+                T_graphic.join()
+
+            if (menu.action == 'retracting squares'):
+                mv.adj_length = 0
+                mv.A_dist = 0
+                mv.B_dist = 0
+                mv.C_dist = 0
+                mv.D_dist = 0
+
+                grph.end = False
+                grph.activate = False
+                grph.stopack = False #read only
+
+
+                sns.sonar_detected=False
+                sns.sonar_enable=True
+
+                PERIPH["gyro"].reset()
+                T_pattern = threading.Thread(target = mv.retracting_square)
+                T_graphic = threading.Thread(target = grph.blinker)
+                T_sensor = threading.Thread(
+                    target = sns.poll_sonar,
+                    args = (15,150)
+                    )
+                T_pattern.start()
+                T_sensor.start()
+                T_graphic.start()
+
+                mv.order = ''
+                mv.stop_pattern = False
+                grph.activate = True
+
+
+                # first lap => measures ring
+                mv.adj_length-= PERIPH["wheels"].left_motor.position
+                mv.straight(use_gyro = True, follow_angle = 0)
+                mv.adj_length+= PERIPH["wheels"].left_motor.position
+                mv.A_dist  -= PERIPH["wheels"].left_motor.position
+                mv.order='straight'
+                while (PERIPH["color"].color != 1):
+                    continue
+                mv.A_dist  += PERIPH["wheels"].left_motor.position
+                mv.order='turn right'
+                while mv.order_ack != True:
+                    continue
+                mv.B_dist  -= PERIPH["wheels"].left_motor.position
+                mv.order='straight'
+                while (PERIPH["color"].color != 1):
+                    continue
+                mv.B_dist  += PERIPH["wheels"].left_motor.position
+                mv.order='turn right'
+                while mv.order_ack != True:
+                    continue
+                mv.C_dist  -= PERIPH["wheels"].left_motor.position
+                mv.order='straight'
+                while (PERIPH["color"].color != 1):
+                    continue
+                mv.C_dist  += PERIPH["wheels"].left_motor.position
+                mv.order='turn right'
+                while mv.order_ack != True:
+                    continue
+                mv.D_dist  -= PERIPH["wheels"].left_motor.position
+                mv.order='straight'
+                while (PERIPH["color"].color != 1):
+                    continue
+                mv.D_dist  += PERIPH["wheels"].left_motor.position
+                mv.order='turn right'
+                while mv.order_ack != True:
+                    continue
+
+                mv.A_dist = min(mv.A_dist,mv.C_dist)
+                mv.B_dist = min(mv.D_dist,mv.B_dist)
+                mv.C_dist = min(mv.A_dist,mv.C_dist)
+                mv.D_dist = min(mv.D_dist,mv.B_dist)
+
+
+                mv.order = 'retract'
+                # print("STARTING TO RETRACT")
+
+                while mv.pattern_done != True:
+                    if sns.sonar_detected:
+                        mv.order = 'stop'
+                        break
+                    
+
+                mv.stop_pattern = True
+                mv.end = True
+                grph.end = True
+                sns.sonar_enable=False
+                T_sensor.join()
+                T_pattern.join()
+                T_graphic.join()
+
+            # print("all processes done")
+            user_cmd = 'help'
 
 
         # CALIBRATION MENU SUB-ROUTINE
-        elif (user_cmd.lower() == 'calibrate'):
+        if (user_cmd.lower() == 'calibrate'):
             T_graphic = threading.Thread(
                 target=grph.loading_animation,
                 args=('Calibrating gyro, do not move', 30 ,6400)
@@ -218,45 +392,83 @@ def main():
             PERIPH["color"].calibrate_white()
             grph.loading_flag = False
             T_graphic.join()
-            continue
+            user_cmd = 'help'
 
 
         # CONFIGURATION MENU SUB-ROUTINE
-        elif (user_cmd.lower() == 'config'):
-            print('not yet implemented')
-            continue
+        if (user_cmd.lower() == 'config'):
+            menu.action = menu.configure()
+
+            if menu.action == 'default cfg':
+                init('default')
+            elif menu.action == 'user cfg':
+                init('user')
+            elif menu.action == 'modify cfg':
+                check, ERR, SYS = init_checkwheels()
+                if (check == 1):
+                    print("Motor ports for wheeldrive have not been modified.")
+                check, ERR, SYS = init_checkclaw()
+                if (check == 1):
+                    print("Motor port for claw has not been modified.")
+                check, ERR = init_checksensors()
+
+                mv.init(PERIPH, SYS)
+                print("Changes have been applied to the current configuration.")
+                print("Press any key to dismiss.")
+                input()
+
+            elif menu.action == 'reset cfg':
+                init('reset')
+            elif menu.action == 'check cfg':
+                print("Current configuration:")
+                for key in SYS:
+                    if key[1] == 'o':
+                        grph.echo(" | {}\t:\n\t=> {}".format(key, SYS[key]))
+                for key in SYS:
+                    if key[1] == 'h':
+                        grph.echo(" | {}\t:\n\t=> {}".format(key, SYS[key]))
+                for key in SYS:
+                    if key[1] == 'a':
+                        grph.echo(" | {}\t:\n\t=> {}".format(key, SYS[key]))
+                for key in SYS:
+                    if key[1] == 'n':
+                        grph.echo(" | {}\t:\n\t=> {}".format(key, SYS[key]))
+                print("\nPress any key to dismiss.")
+                input()
+            user_cmd = 'help'
 
 
         # SPIN COMMAND SUB-ROUTINE
-        elif (user_cmd.lower() == 'spin'):
-            PERIPH["wheels"].on(-8,8)
+        if (user_cmd.lower() == 'spin'):
+            PERIPH["wheels"].on(8,-8)
             continue
 
 
         # STOP COMMAND SUB-ROUTINE
-        elif (user_cmd.lower() == 'stop'):
+        if (user_cmd.lower() == 'stop'):
             PERIPH["wheels"].on(0,0)
             continue
         
 
         # HELP MENU
-        elif (user_cmd.lower() == 'help'):
+        if (user_cmd.lower() == 'help'):
+            grph.CLEAR_CONSOLE()
             menu.help()
             continue
 
 
         # EXIT COMMAND
-        elif (user_cmd.lower() == 'exit'):
+        if (user_cmd.lower() == 'exit'):
             return
 
 
 
         # ETC COMMANDS
-        elif (user_cmd.lower() == ''):
+        if (user_cmd.lower() == ''):
             continue
-        else:
-            print("Invalid argument.")
-            print("\n\t>>> {} is not recognized as a command.\n".format(user_cmd.lower()))
+        # else
+        print("Invalid argument.")
+        print("\n\t>>> {} is not recognized as a command.\n".format(user_cmd.lower()))
 
 
     return

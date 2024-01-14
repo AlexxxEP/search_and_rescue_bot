@@ -24,6 +24,9 @@ import json
 
 # ---  DECLARATIONS  ---
 # --- CONSTANTS / CONFIG
+PERIPH =[]
+SYS =[]
+module_init = False
 
 # --- GRAPHIC RESSOURCES 
 loading_flag = True
@@ -224,6 +227,29 @@ d_clw=[
 
 
 # ---  FUNCTION DEFINITION  ---
+def init(*args):
+	"""
+	init
+	"""
+	global PERIPH
+	global SYS
+	global module_init
+
+	try:
+		PERIPH = args[0]
+		module_init = True
+	except:
+		print("\n\t>>> Failed to call PERIPH from {}".format(__name__))
+		return 1
+	try:
+		SYS = args[1]
+	except:
+		print("\n\t>>> Failed to call SYS from {}".format(__name__))
+		return 1
+	return
+
+
+
 def CLEAR_CONSOLE(n=50):
 	for k in range(n):
 		print("\n")
@@ -427,51 +453,82 @@ def ROBOT(lw_status='n' , rw_status='n', clw_status='n'):
 	# 	sleep(0.3)
 	# return
 
-def blinker(wheels, claw):
+def blinker():
+	global PERIPH
 	global activate
 	global end
 	global stopack
 
-	old_pos_left=wheels.left_motor.position
-	old_pos_right=wheels.right_motor.position
+	pos_left = PERIPH["wheels"].left_motor.position
+	pos_right = PERIPH["wheels"].right_motor.position
+	old_pos_left = pos_left
+	old_pos_right = pos_right
 
-	phase = 100
+	old_old_lw_status = 'n'
+	old_lw_status = 'n'
+	lw_status = 'n'
+	old_old_rw_status = 'n'
+	old_rw_status = 'n'
+	rw_status = 'n'
+
+	new_lw_status = 'n'
+	old_new_lw_status = 'n'
+	new_rw_status = 'n'
+	old_new_rw_status = 'n'
+
+	poller = 0
+	poll = 100
+
 	while end != True:
 		if activate !=True:
 			stopack = True
-			phase=20
 			continue
 		stopack = False
 
-		if phase == 100:
-			phase = 0
-			pos_left=wheels.left_motor.position
-			pos_right=wheels.right_motor.position
-	
-			if (old_pos_left-pos_left <0):
-				lw_status = 'd'
-			elif (old_pos_left-pos_left >0):
-				lw_status = 'r'
-			else:
-				lw_status = 'n'
-	
-			if (old_pos_right-pos_right <0):
-				rw_status = 'd'
-			elif (old_pos_right-pos_right >0):
-				rw_status = 'r'
-			else:
-				rw_status = 'n'
-	
-			old_pos_left=pos_left
-			old_pos_right=pos_right
+		sleep = 0.5
+		poller +=1
+		if poller == poll:
+			poller = 0
+		else:
+			continue
 
-			clw_status = 'n'
+		old_pos_left = pos_left
+		old_pos_right = pos_right
+		pos_left=PERIPH["wheels"].left_motor.position
+		pos_right=PERIPH["wheels"].right_motor.position
 
-			CLEAR_CONSOLE(10)
-			ROBOT(lw_status, rw_status, clw_status)
-		phase +=1
-		# CLEAR_CONSOLE(10)
 
+		old_old_lw_status = old_lw_status
+		old_old_rw_status = old_rw_status
+		old_lw_status = lw_status
+		old_rw_status = rw_status
+
+		if (old_pos_left < pos_left):
+			lw_status = 'd'
+		elif (old_pos_left > pos_left):
+			lw_status = 'r'
+		elif (old_pos_left == pos_left):
+			lw_status = 'n'
+
+		if (old_pos_right < pos_right):
+			rw_status = 'd'
+		elif (old_pos_right > pos_right):
+			rw_status = 'r'
+		elif (old_pos_right == pos_right):
+			rw_status = 'n'
+
+		clw_status = 'n'
+
+		if (lw_status == old_lw_status):
+			if (old_lw_status == old_old_lw_status):
+				if (rw_status == old_rw_status):
+					if( old_rw_status == old_old_rw_status):	
+						CLEAR_CONSOLE(10)
+						ROBOT(lw_status, rw_status, clw_status)
+		
+
+	# CLEAR_CONSOLE(10)
+	# ROBOT('n','n','n')
 	return
 # ---  ---  ---  ---  ---  ---  ---
 
