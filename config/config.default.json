@@ -8,8 +8,8 @@
 
   "physical":{
 
-    "wheeldiameter"   : "55",
-    "trackdist"       : "120"
+    "wheeldiameter"   : "5.6",
+    "trackdist"       : "11.8"
   },
 
   "target":{

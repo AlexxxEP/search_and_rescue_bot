@@ -54,19 +54,25 @@ def init(*args):
 	init of movement submodule
 	"""
 	global PERIPH
+	global SYS
 	global module_init
 
 	try:
-		PERIPH != []
+		PERIPH = args[0]
 		module_init = True
 	except:
 		print("\n\t>>> Failed to call PERIPH from {}".format(__name__))
+		return 1
+	try:
+		SYS = args[1]
+	except:
+		print("\n\t>>> Failed to call SYS from {}".format(__name__))
 		return 1
 	return
 
 
 #	--- BASIC FUNCTIONS
-def straight(speed=15, use_gyro=False):
+def straight(speed=15, use_gyro=False, follow_angle=0):
 	"""
 	Runs straight following the facing angle
 	if no angle is specified, then the robot shall
@@ -75,13 +81,18 @@ def straight(speed=15, use_gyro=False):
 	position tracking is not required, such as
 	calibration, manual movement, etc.
 	"""
+	global PERIPH
+	global straight_kp
+	global straight_ki
+	global straight_kd
+
 	if module_init != True :
 		print("\n\t>>> Error : wheelset has not been instanciated to {}".format(__name__))
 		return 1
-
-	# global PERIPH
-	print(PERIPH)
-	PERIPH["wheels"].on(speed, speed)
+	if use_gyro:
+		PERIPH["wheels"].follow_gyro_angle(straight_kp,straight_ki,straight_kd,8, follow_angle, 0.05,follow_for_ms, ms=1000)
+	else:
+		PERIPH["wheels"].on(speed, speed)
 
 	return
 

@@ -55,32 +55,21 @@ print("# Done importing")
 
 
 # ---  DECLARATIONS  ---
-# --- CONSTANTS / CONFIG
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
+# --- CONFIG
 SYS= {
-    "SYS_port_lwheel" : "",             
-    "SYS_port_rwheel" : "",             
-    "SYS_port_claw" : "",               
-    "SYS_phys_trackdist" : "",          
-    "SYS_phys_wheeldiameter" : "",      
-    "SYS_targ_diameter" : "",           
-    "SYS_targ_color" : "",              
-    "SYS_envi_width" : "",              
-    "SYS_envi_length" : "",             
-    "SYS_envi_floorcolor" : "",         
-    "SYS_envi_edgecolor" : ""           
+    "port_lwheel" : None,             
+    "port_rwheel" : None,             
+    "port_claw" : None,               
+    "phys_trackdist" : None,          
+    "phys_wheeldiameter" : None,      
+    "targ_diameter" : None,           
+    "targ_color" : None,              
+    "envi_width" : None,              
+    "envi_length" : None,             
+    "envi_floorcolor" : None,         
+    "envi_edgecolor" : None           
 }
-
-
-
-
-
-# --- VARIABLES
-MACHINE_STATE = 'STATE_INIT'
-MACHINE_STATE_OLD = 'STATE_INIT'
-
-
 
 # --- PERIPHERALS
 PERIPH = {
@@ -110,28 +99,32 @@ def main():
 
 
     # ----------------------- HARDWARE INIT --------------------
+    global ERR, PERIPH, SYS
     ERR,PERIPH = init_ports()
 
     if (ERR["port_wheels"]):
         print("\n[?] Setup ports for wheeldrive now ?")
         userinput = input(" |  (Y: proceed / N: cancel)\n").upper()
-        check = init_checkwheels(userinput)
+        check, ERR, SYS = init_checkwheels(userinput)
         if (check == 1):
             return
     if (ERR["port_claw"]):
         print("\n[?] Setup ports for claw now ?")
         userinput = input(" |  (Y: proceed / N: cancel)\n").upper()
-        check = init_checkclaw(userinput)
+        check, ERR, SYS = init_checkclaw(userinput)
         if (check == 1):
             return
-    for obj in ERR:
-        if ERR[obj]:
-            print("\n[?] Reconnect ports for sensors now ?")
-            userinput = input(" |  (Y: proceed / N: cancel)\n").upper()
-            check = init_checksensor(userinput, obj)
-            if (check == 1):
-                return
-    mv.init(PERIPH)
+    while (ERR["port_gyro"] or ERR["port_color"] or ERR["port_sonar"]):
+        print("\n[?] Try reconnecting sensors now ?")
+        userinput = input(" |  (Y: proceed / N: cancel)\n").upper()
+        check, ERR = init_checksensors(userinput)
+        if (check == 1):
+            return
+
+    # init_save_config()
+    mv.init(PERIPH, SYS)
+    sns.init(PERIPH, SYS)
+    grph.init(PERIPH, SYS)
 
 
     # ------------------------ CALIBRATION -------------------
@@ -274,8 +267,7 @@ def main():
 
 
 # ---  CODE START  ---  ---
-init()
-print(SYS_port_claw)
+SYS = init()
 main()
 
 # grph.CLEAR_CONSOLE()

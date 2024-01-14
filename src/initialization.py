@@ -28,6 +28,21 @@ from ev3dev2.sensor.lego import *
 
 
 # ---  DECLARATIONS  ---
+SYS= {
+    "port_lwheel" : None,             
+    "port_rwheel" : None,             
+    "port_claw" : None,               
+    "phys_trackdist" : None,          
+    "phys_wheeldiameter" : None,      
+    "targ_diameter" : None,           
+    "targ_color" : None,              
+    "envi_width" : None,              
+    "envi_length" : None,             
+    "envi_floorcolor" : None,         
+    "envi_edgecolor" : None           
+}
+
+
 PERIPH = {
     "wheels" : None,
     "claw" : None,
@@ -36,17 +51,6 @@ PERIPH = {
     "sonar" : None
 }
 
-# SYS_port_lwheel
-# SYS_port_rwheel
-# SYS_port_claw
-# SYS_phys_trackdist
-# SYS_phys_wheeldiameter
-# SYS_targ_diameter
-# SYS_targ_color
-# SYS_envi_width
-# SYS_envi_length
-# SYS_envi_floorcolor
-# SYS_envi_edgecolor
 
 ERR = {
     "port_wheels" : False,
@@ -83,17 +87,6 @@ def init(config='user'):
         return 1
 
     global SYS
-    global SYS_port_lwheel      
-    global SYS_port_rwheel      
-    global SYS_port_claw        
-    global SYS_phys_trackdist   
-    global SYS_phys_wheeldiameter
-    global SYS_targ_diameter    
-    global SYS_targ_color       
-    global SYS_envi_width       
-    global SYS_envi_length      
-    global SYS_envi_floorcolor  
-    global SYS_envi_edgecolor   
 
     try:
         cfg_user_json = open('../config/config.user.json', 'r')
@@ -110,49 +103,72 @@ def init(config='user'):
         if (config == 'user'):
             with open('../config/config.user.json', 'r') as cfg_user_json:
                 cfg_user = json.load(cfg_user_json)
-                SYS_port_lwheel             = cfg_user['port']['lwheel']
-                SYS_port_rwheel             = cfg_user['port']['rwheel']
-                SYS_port_claw               = cfg_user['port']['claw']
-                SYS_phys_trackdist          = cfg_user['physical']['trackdist']
-                SYS_phys_wheeldiameter      = cfg_user['physical']['wheeldiameter']
-                SYS_targ_diameter           = cfg_user['target']['diameter']
-                SYS_targ_color              = cfg_user['target']['color']
-                SYS_envi_width              = cfg_user['environment']['width']
-                SYS_envi_length             = cfg_user['environment']['length']
-                SYS_envi_floorcolor         = cfg_user['environment']['floorcolor']
-                SYS_envi_edgecolor          = cfg_user['environment']['edgecolor']
+                SYS["port_lwheel"]             = cfg_user['port']['lwheel']
+                SYS["port_rwheel"]             = cfg_user['port']['rwheel']
+                SYS["port_claw"]               = cfg_user['port']['claw']
+                SYS["phys_trackdist"]          = cfg_user['physical']['trackdist']
+                SYS["phys_wheeldiameter"]      = cfg_user['physical']['wheeldiameter']
+                SYS["targ_diameter"]           = cfg_user['target']['diameter']
+                SYS["targ_color"]              = cfg_user['target']['color']
+                SYS["envi_width"]              = cfg_user['environment']['width']
+                SYS["envi_length"]             = cfg_user['environment']['length']
+                SYS["envi_floorcolor"]         = cfg_user['environment']['floorcolor']
+                SYS["envi_edgecolor"]          = cfg_user['environment']['edgecolor']
             cfg_user_json.close()
         elif (config == 'default'):
-            SYS_port_lwheel             = cfg_def['port']['lwheel']
-            SYS_port_rwheel             = cfg_def['port']['rwheel']
-            SYS_port_claw               = cfg_def['port']['claw']
-            SYS_phys_trackdist          = cfg_def['physical']['trackdist']
-            SYS_phys_wheeldiameter      = cfg_def['physical']['wheeldiameter']
-            SYS_targ_diameter           = cfg_def['target']['diameter']
-            SYS_targ_color              = cfg_def['target']['color']
-            SYS_envi_width              = cfg_def['environment']['width']
-            SYS_envi_length             = cfg_def['environment']['length']
-            SYS_envi_floorcolor         = cfg_def['environment']['floorcolor']
-            SYS_envi_edgecolor          = cfg_def['environment']['edgecolor']
+            SYS["port_lwheel"]             = cfg_def['port']['lwheel']
+            SYS["port_rwheel"]             = cfg_def['port']['rwheel']
+            SYS["port_claw"]               = cfg_def['port']['claw']
+            SYS["phys_trackdist"]          = cfg_def['physical']['trackdist']
+            SYS["phys_wheeldiameter"]      = cfg_def['physical']['wheeldiameter']
+            SYS["targ_diameter"]           = cfg_def['target']['diameter']
+            SYS["targ_color"]              = cfg_def['target']['color']
+            SYS["envi_width"]              = cfg_def['environment']['width']
+            SYS["envi_length"]             = cfg_def['environment']['length']
+            SYS["envi_floorcolor"]         = cfg_def['environment']['floorcolor']
+            SYS["envi_edgecolor"]          = cfg_def['environment']['edgecolor']
         elif (config == 'reset'):
             with open('../config/config.user.json', 'w') as cfg_user_json:
                 json.dump(cfg_def,cfg_user_json, indent=2)
-            SYS_port_lwheel             = cfg_def['port']['lwheel']
-            SYS_port_rwheel             = cfg_def['port']['rwheel']
-            SYS_port_claw               = cfg_def['port']['claw']
-            SYS_phys_trackdist          = cfg_def['physical']['trackdist']
-            SYS_phys_wheeldiameter      = cfg_def['physical']['wheeldiameter']
-            SYS_targ_diameter           = cfg_def['target']['diameter']
-            SYS_targ_color              = cfg_def['target']['color']
-            SYS_envi_width              = cfg_def['environment']['width']
-            SYS_envi_length             = cfg_def['environment']['length']
-            SYS_envi_floorcolor         = cfg_def['environment']['floorcolor']
-            SYS_envi_edgecolor          = cfg_def['environment']['edgecolor']
+            SYS["port_lwheel"]             = cfg_def['port']['lwheel']
+            SYS["port_rwheel"]             = cfg_def['port']['rwheel']
+            SYS["port_claw"]               = cfg_def['port']['claw']
+            SYS["phys_trackdist"]          = cfg_def['physical']['trackdist']
+            SYS["phys_wheeldiameter"]      = cfg_def['physical']['wheeldiameter']
+            SYS["targ_diameter"]           = cfg_def['target']['diameter']
+            SYS["targ_color"]              = cfg_def['target']['color']
+            SYS["envi_width"]              = cfg_def['environment']['width']
+            SYS["envi_length"]             = cfg_def['environment']['length']
+            SYS["envi_floorcolor"]         = cfg_def['environment']['floorcolor']
+            SYS["envi_edgecolor"]          = cfg_def['environment']['edgecolor']
+    
+    return SYS
     
 
-    
-    return
-    
+# def init_save_config():
+#     """
+#     saves current configuration into local user config
+#     """
+#     global SYS
+#     try:
+#         with open('../config/config.user.json', 'w') as cfg_user_json:
+#             cfg_user = json.load(cfg_user_json)
+#             cfg_user['port']['lwheel']             = SYS["port_lwheel"]
+#             cfg_user['port']['rwheel']             = SYS["port_rwheel"]
+#             cfg_user['port']['claw']               = SYS["port_claw"]
+#             cfg_user['physical']['trackdist']      = SYS["phys_trackdist"]
+#             cfg_user['physical']['wheeldiameter']  = SYS["phys_wheeldiameter"]
+#             cfg_user['target']['diameter']         = SYS["targ_diameter"]
+#             cfg_user['target']['color']            = SYS["targ_color"]
+#             cfg_user['environment']['width']       = SYS["envi_width"]
+#             cfg_user['environment']['length']      = SYS["envi_length"]
+#             cfg_user['environment']['floorcolor']  = SYS["envi_floorcolor"]
+#             cfg_user['environment']['edgecolor']   = SYS["envi_edgecolor"]
+#     except:
+#         print("Error while trying to save configuration.")
+#     else:
+#         print("Sucesfully saved current configuration to local user configuration.")
+#     return
 
 def init_ports():
     """
@@ -160,14 +176,14 @@ def init_ports():
     ERR_msg = []
 
     try:
-        PERIPH["wheels"] = MoveTank(SYS_port_lwheel,SYS_port_rwheel)
+        PERIPH["wheels"] = MoveTank(SYS["port_lwheel"],SYS["port_rwheel"])
         ERR["port_wheels"] =False
     except Exception as e_msg:
         ERR_msg.append(e_msg)
         ERR["port_wheels"] =True
 
     try:
-        PERIPH["claw"] = MediumMotor(SYS_port_claw)
+        PERIPH["claw"] = MediumMotor(SYS["port_claw"])
         ERR["port_claw"] =False
     except Exception as e_msg:
         ERR_msg.append(e_msg)
@@ -201,8 +217,10 @@ def init_ports():
     if (ERR["port_wheels"] or ERR["port_claw"] or ERR["port_gyro"] or ERR["port_color"] or ERR["port_sonar"]):
         print("\nConfiguration error.")
         print("Check physical connections on robot according to current configuration.")
+    if (ERR["port_wheels"] or ERR["port_claw"]):
         print("Robot configuration can be found under /config directory.")
-        print("For permanent changes, use init_configure() to modify robot configuration.\n")
+        print("For permanent changes, modify robot configuration from the")
+        print("upcoming menus or directly from /config directory.\n")
 
     for msg in ERR_msg:
         print("\t>>> {}".format(msg))
@@ -215,9 +233,11 @@ def init_checkwheels(userinput="Y"):
     remediates un-initialized wheels port
     """
     global ERR
+    global SYS
+
     if (userinput == "N" ):
         print("\n\nExiting ...")
-        return 1
+        return 1, ERR, SYS
 
     elif (userinput == "Y" ):
         print("\n[?] Register left motor port : ")
@@ -225,7 +245,7 @@ def init_checkwheels(userinput="Y"):
         print("\n[?] Register right motor port : ")
         user_rightmotorport = input(" |  (A/B/C/D)\n").upper()
         try:
-            wheels = MoveTank('ev3-ports:out'+user_leftmotorport,'ev3-ports:out'+user_rightmotorport)
+            PERIPH["wheels"] = MoveTank('ev3-ports:out'+user_leftmotorport,'ev3-ports:out'+user_rightmotorport)
         except Exception as error:
             print("\n\nAssignement of ports for wheeldrive was unsuccesful.")
             print("\n\t>>> {}\n".format(error))
@@ -234,33 +254,37 @@ def init_checkwheels(userinput="Y"):
             check = init_checkwheels(checkinput)
             return check
         else:
+            SYS["port_lwheel"] = user_leftmotorport
+            SYS["port_rwheel"] = user_rightmotorport
             print("Assignement of ports for wheeldrive succesful.")
             ERR["port_wheels"]=False
-            return 0
+            return 0, ERR, SYS
         return
 
     print("\n\t>>> Incorrect argument.")
     print("[?] Setup ports for wheeldrive now ?")
     checkinput = input(" |  (Y: proceed / N: cancel)\n").upper()
     check = init_checkwheels(checkinput)
-    return check
+    return check, ERR, SYS
     
     
-def init_checkclaw(userinput):
+def init_checkclaw(userinput="Y"):
     """
     remediates un-initialized claw port
     """
     global ERR
+    global SYS
+
     if (userinput == "N"):
         print("\n\nExiting ...")
-        return 1
+        return 1, ERR, SYS
 
     elif (userinput == "Y"):
         print("[?] Register claw port :")
         user_clawport = input("\n |  (A/B/C/D)\n").upper()
 
         try:
-            claw = MediumMotor('ev3-ports:out'+user_clawport)
+            PERIPH["claw"] = MediumMotor('ev3-ports:out'+user_clawport)
         except Exception as error:
             print("\n\nAssignement of port for claw was unsuccesful.\n\n")
             print("\n\t>>> {}\n".format(error))
@@ -269,8 +293,10 @@ def init_checkclaw(userinput):
             check = init_checkclaw(checkinput)
             return check
         else:
+            SYS["port_claw"] = user_clawport
             print("Assignement of port for claw succesful.")
-            return 0
+            ERR["port_claw"] = False
+            return 0, ERR, SYS
         return
 
     else:
@@ -278,15 +304,66 @@ def init_checkclaw(userinput):
         print("[?] Setup port for claw now ?")
         checkinput = input(" |  (Y: proceed / N: cancel)\n").upper()
         check = init_checkclaw(checkinput)
-        return check
+        return check, ERR, SYS
     return
 
-def init_checksensor(userinput):
+def init_checksensors(userinput="Y"):
     """
     allows the user to reconnect the sensor of interest
     """
+    global ERR
+    ERR_msg = []
+    if (userinput == "N"):
+        print("\n\nExiting ...")
+        return 1, ERR
+
+    elif (userinput == "Y"):
+        try:
+            PERIPH["gyro"] = GyroSensor()
+            PERIPH["wheels"].gyro = PERIPH["gyro"]
+        except Exception as e_msg:
+            ERR_msg.append(e_msg)
+            ERR["port_gyro"] = True
+        else:
+            if ERR["port_gyro"] :
+                print("Connection to GyroSensor succesful.")
+                ERR["port_gyro"] = False
+
+        try:
+            PERIPH["color"] = ColorSensor()
+        except Exception as e_msg:
+            ERR_msg.append(e_msg)
+            ERR["port_color"] =True
+        else:
+            if ERR["port_color"] :
+                print("Connection to ColorSensor succesful.")
+                ERR["port_color"] =False
+
+        try:
+            PERIPH["sonar"] = UltrasonicSensor()
+        except Exception as e_msg:
+            ERR_msg.append(e_msg)
+            ERR["port_sonar"] =True
+        else:
+            if ERR["port_sonar"] :
+                print("Connection to UltrasonicSensor succesful.")
+                ERR["port_sonar"] =False
     
-    return
+    else:
+        print("\n\t>>> Incorrect argument.")
+        print("[?] Try reconnecting sensors now ?")
+        checkinput = input(" |  (Y: proceed / N: cancel)\n").upper()
+        check = init_checksensors(checkinput, sensor)
+        return check, ERR
+
+    if (ERR["port_gyro"] or ERR["port_color"] or ERR["port_sonar"]):
+        print("\nConfiguration error.")
+        print("Check physical connections on robot according to current configuration.")
+
+    for msg in ERR_msg:
+        print("\t>>> {}".format(msg))
+
+    return 0, ERR
 
 # ---  ---  ---  ---  ---  ---  ---
 
