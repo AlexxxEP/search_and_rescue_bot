@@ -29,7 +29,7 @@ from time import sleep
 # Setup
 us = UltrasonicSensor()
 wheel_diameter=55.5
-wheels = MoveTank(OUTPUT_D, OUTPUT_A)
+wheels = MoveTank(OUTPUT_A, OUTPUT_D)
 
 # Use
 # us.mode='US-DIST-CM'
