@@ -39,8 +39,8 @@ D_dist = 0
 
 hairpin_tol = 0 # tacho counts
 
-turning_tolerance_left= 7 #degrees
-turning_tolerance_right= 7 #degrees
+turning_tolerance_left= 8 #degrees
+turning_tolerance_right= 6 #degrees
 wheel_diameter = 5.6 # Diameter of the wheels in centimeters
 wheel_circumference = wheel_diameter * m.pi # Circumference = π * diameter
 wheel_trackdist = 11.8
@@ -84,7 +84,7 @@ def init(*args):
 
 
 #	--- BASIC FUNCTIONS
-def straight(speed=15, use_gyro=False, follow_angle=0):
+def straight(speed=25, use_gyro=False, follow_angle=0):
 	"""
 	Runs straight following the facing angle
 	if no angle is specified, then the robot shall
