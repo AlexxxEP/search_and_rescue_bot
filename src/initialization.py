@@ -39,7 +39,11 @@ SYS= {
     "envi_width" : None,              
     "envi_length" : None,             
     "envi_floorcolor" : None,         
-    "envi_edgecolor" : None           
+    "envi_edgecolor" : None,
+    "logic_kp": None,
+    "logic_ki": None,
+    "logic_kd": None,
+    "gui_drawrobot": None,   
 }
 
 
@@ -114,6 +118,10 @@ def init(config='user'):
                 SYS["envi_length"]             = cfg_user['environment']['length']
                 SYS["envi_floorcolor"]         = cfg_user['environment']['floorcolor']
                 SYS["envi_edgecolor"]          = cfg_user['environment']['edgecolor']
+                SYS["logic_kp"]                = cfg_user["logic"]["logic_kp"]
+                SYS["logic_ki"]                = cfg_user["logic"]["logic_ki"]
+                SYS["logic_kd"]                = cfg_user["logic"]["logic_kd"]
+                SYS["gui_drawrobot"]           = cfg_user["gui"]["gui_drawrobot"]
             cfg_user_json.close()
         elif (config == 'default'):
             SYS["port_lwheel"]             = cfg_def['port']['lwheel']
@@ -127,6 +135,10 @@ def init(config='user'):
             SYS["envi_length"]             = cfg_def['environment']['length']
             SYS["envi_floorcolor"]         = cfg_def['environment']['floorcolor']
             SYS["envi_edgecolor"]          = cfg_def['environment']['edgecolor']
+            SYS["logic_kp"]                = cfg_def["logic"]["logic_kp"]
+            SYS["logic_ki"]                = cfg_def["logic"]["logic_ki"]
+            SYS["logic_kd"]                = cfg_def["logic"]["logic_kd"]
+            SYS["gui_drawrobot"]           = cfg_def["gui"]["gui_drawrobot"]
         elif (config == 'reset'):
             with open('../config/config.user.json', 'w') as cfg_user_json:
                 json.dump(cfg_def,cfg_user_json, indent=2)
@@ -141,6 +153,10 @@ def init(config='user'):
             SYS["envi_length"]             = cfg_def['environment']['length']
             SYS["envi_floorcolor"]         = cfg_def['environment']['floorcolor']
             SYS["envi_edgecolor"]          = cfg_def['environment']['edgecolor']
+            SYS["logic_kp"]                = cfg_def["logic"]["logic_kp"]
+            SYS["logic_ki"]                = cfg_def["logic"]["logic_ki"]
+            SYS["logic_kd"]                = cfg_def["logic"]["logic_kd"]
+            SYS["gui_drawrobot"]           = cfg_def["gui"]["gui_drawrobot"]
     
     return SYS
     
@@ -364,6 +380,9 @@ def init_checksensors(userinput="Y"):
         print("\t>>> {}".format(msg))
 
     return 0, ERR
+
+
+
 
 # ---  ---  ---  ---  ---  ---  ---
 

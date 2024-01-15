@@ -11,6 +11,15 @@
     "wheeldiameter"   : "5.6",
     "trackdist"       : "11.8"
   },
+  
+  "logic": {
+    "kp":10,
+    "ki":0,
+    "kd":1
+  },
+  "gui": {
+    "draw robot": true
+  },
 
   "target":{
 

@@ -69,7 +69,11 @@ SYS= {
     "envi_width" : None,              
     "envi_length" : None,             
     "envi_floorcolor" : None,         
-    "envi_edgecolor" : None           
+    "envi_edgecolor" : None,
+    "logic_kp": None,
+    "logic_ki": None,
+    "logic_kd": None,
+    "gui_drawrobot": None,   
 }
 
 # --- PERIPHERALS

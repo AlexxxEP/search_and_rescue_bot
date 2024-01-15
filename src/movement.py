@@ -62,6 +62,9 @@ def init(*args):
 	global PERIPH
 	global SYS
 	global module_init
+	global straight_kp
+	global straight_ki
+	global straight_kd
 
 	try:
 		PERIPH = args[0]
@@ -71,6 +74,9 @@ def init(*args):
 		return 1
 	try:
 		SYS = args[1]
+		straight_kp = SYS["logic_kp"]
+		straight_ki = SYS["logic_ki"]
+		straight_kd = SYS["logic_kd"]
 	except:
 		print("\n\t>>> Failed to call SYS from {}".format(__name__))
 		return 1

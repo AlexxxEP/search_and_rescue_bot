@@ -4,6 +4,15 @@
     "lwheel": "A",
     "rwheel": "D"
   },
+
+  "logic": {
+    "kp":10,
+    "ki":0,
+    "kd":1
+  },
+  "gui": {
+    "drawrobot": true
+  },
   "physical": {
     "wheeldiameter": "55",
     "trackdist": "120"

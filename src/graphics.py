@@ -28,6 +28,8 @@ PERIPH =[]
 SYS =[]
 module_init = False
 
+gui_drawrobot = True
+
 # --- GRAPHIC RESSOURCES 
 loading_flag = True
 
@@ -234,6 +236,7 @@ def init(*args):
 	global PERIPH
 	global SYS
 	global module_init
+	global gui_drawrobot
 
 	try:
 		PERIPH = args[0]
@@ -243,6 +246,7 @@ def init(*args):
 		return 1
 	try:
 		SYS = args[1]
+		gui_drawrobot = SYS["gui_drawrobot"]
 	except:
 		print("\n\t>>> Failed to call SYS from {}".format(__name__))
 		return 1
@@ -376,6 +380,8 @@ def TECHNOBOTS_LOGO(style='slant'):
 	return
 
 def ROBOT(lw_status='n' , rw_status='n', clw_status='n'):
+	
+
 	lws=lw_status
 	rws=rw_status
 	clws=clw_status
@@ -458,6 +464,10 @@ def blinker():
 	global activate
 	global end
 	global stopack
+	global gui_drawrobot
+	if gui_drawrobot == False:
+		return
+
 
 	pos_left = PERIPH["wheels"].left_motor.position
 	pos_right = PERIPH["wheels"].right_motor.position
